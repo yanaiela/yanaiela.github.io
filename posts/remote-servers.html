@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>remote-servers</title>
+
+  <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Icon packs -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+
+    <!-- Custom styles for this template -->
+    <link href="../css/scrolling-nav.css" rel="stylesheet">
+
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body id="page-top">
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand js-scroll-trigger" href="#page-top">Yanai Elazar</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="../index.html#about">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="../index.html#news">News</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="../index.html#pubs">Publications</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+<section id="content">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        
+<h1 id="remote-servers">Remote Servers</h1>
+<p>For the past several years, I’ve been working on data-science/research projects, starting in the industry and a couple of undergraduate assignments and more recently by doing research as a graduate student. As someone who likes a convenient environment, I always like to improve the way I work and automate routine dull processes. In this first post of mine, I’ll describe how I make my environment more convenient to work with.</p>
+<p>The setup with which I work with contains the following components:</p>
+<ul>
+<li>My personal computer (linux distro)</li>
+<li>A gateway machine</li>
+<li>Remote servers</li>
+</ul>
+<figure>
+<img src="server-setup.png" alt="alt text" /><figcaption></figcaption>
+</figure>
+<p>As I usually work on computational greedy projects, the usage of my laptop is out of the question. Therefore I need a constant connection to those machines. For security reasons, the remote servers are not directly accessible, meaning they can only be reached by the gateway machine.</p>
+<p>The basic way of connecting to the servers is to first connect with ssh to the gateway and then ssh again to the server which requires entering the user and password at every connection. This is rather cumbersome and gets annoying after the first time. We will go through the steps on how to easily connect to both servers with a single command.</p>
+<h2 id="making-ssh-great-again">Making SSH Great Again</h2>
+<h3 id="a-few-words-on-ssh">A few words on SSH</h3>
+<p>SSH (Secure Shell), is a secure protocol, which allows the users to control the server they connect to. The common way of connecting to a remote server using ssh is by the following command: <code>ssh user@host</code>, which will then result in a password prompt. In this post I won’t get into the details on how ssh works, but only assume the basic usage knowledge.</p>
+<h3 id="connect-wo-the-need-of-a-password">Connect w/o the need of a password</h3>
+<p>We are going to create an authentication key and transfer the public one to the server we wish to connect to. Let’s begin by setting up the first connection - from the laptop to the gateaway.</p>
+<p>We will use a nice little software named ssh-copy. It does all the work for us and all we need to do is to type the following line in a terminal:</p>
+<pre><code>ssh-keygen -t rsa  # create an SSH key, if needed.
+ssh-copy-id -i ~/.ssh/id_rsa.pub user@host</code></pre>
+<ul>
+<li>Linux users should already have this software installed.</li>
+<li>Mac users will need to install the ssh-copy tool by:</li>
+</ul>
+<pre><code>brew install ssh-copy-id</code></pre>
+<p>The ssh-copy-id command will copy your SSH key to the server, create the appropriate ssh folder, if needed and finally append the public key as an authorized key in the server .ssh/authorized_keys file.</p>
+<p>If for some reason this doesn’t work, just copy-paste the following commands, which is basically what ssh-copy does:</p>
+<p>Open a terminal and run the following steps:</p>
+<ol type="1">
+<li>Generate a pair of authentication keys. You will be asked to enter a passphrase, which is optional.</li>
+</ol>
+<pre><code>ssh-keygen -t rsa</code></pre>
+<ol start="2" type="1">
+<li>create a <code>.ssh</code> folder on the remote machine (if it doesn’t exist already)</li>
+</ol>
+<pre><code>ssh user@host mkdir -p .ssh</code></pre>
+<ol start="3" type="1">
+<li>Append the public key you generated earlier to the remote machine (this is the last time you enter your password, hopefully).</li>
+</ol>
+<pre><code>cat .ssh/id_rsa.pub | ssh user@host &#39;cat &gt;&gt; .ssh/authorized_keys&#39;</code></pre>
+<p>That’s it! from now on you can reach the server easily without the need of a password</p>
+<pre><code>ssh user@host</code></pre>
+<p>For reaching the servers machines from the gateway follow the same steps (if it wasn’t already configured).</p>
+<h3 id="convenient-sshing">Convenient SSHing</h3>
+<p>Now that we got a bit more sophisticated, turns out we can do better. Instead of ssh’ing the whole hostname + username every time, we can make it more convenient - both for the gateway, and the proxied machines.</p>
+<p>In the <code>~/.ssh/config</code> file on the local computer, insert the following:</p>
+<pre><code>Host gate
+ HostName [gateway.name]
+    User [user]
+
+Host work1
+ HostName [machine.name]
+ user [user]
+ ProxyCommand ssh gate nc %h %p</code></pre>
+<p>There’s another useful configuration argument called ‘IdentityFile’ that is useful when working with multiple public/private keypairs. Let’s say you have a github account for work, besides the private one, which you use for your personal projects. You’ll need another public-private key pair for it, but you still want a convenient interface with it. Here is an example for how to set it up in the config file:</p>
+<pre><code>Host company-github
+    User git
+    HostName company.github.com
+    IdentityFile ~/.ssh/github.comp.key</code></pre>
+<p>Each ssh connection will use the appropriate key for the required connection.</p>
+<p>We can add all the remote servers in a similar manner, for allowing an easy connection for each server.</p>
+<p>Now, a simple command of <code>ssh gate</code> or <code>ssh work1</code> will bring us directly to the gateway or work1 servers respectively, with no need for any password or another connection.</p>
+<h2 id="tunneling">Tunneling</h2>
+<figure>
+<img src="tunnel.jpeg" alt="alt text" /><figcaption></figcaption>
+</figure>
+<p>Now that we have a convenient access to the remote servers, we can use tunneling for achieving a seamless access to the servers’ resources in our computer. This way, we can for example run a Jupyter notebook on a remote machine (with lots of memory) and interact with it on our browser. It allows us:</p>
+<ul>
+<li>To turn off the computer and keep the notebook running on the server.</li>
+<li>To open and access the same notebook even from another computer.</li>
+<li>To keep models loaded on the remote server. Meaning we load once and access forever (or until the admins will perform a restart)</li>
+</ul>
+<p>For example if we want to open a notebook on the server <code>work1</code> on port <code>9100</code>, we will open a tunnel to our computer on port <code>9200</code> with the following command:</p>
+<pre><code>ssh -N -f -L localhost:9200:localhost:9100 work1</code></pre>
+<h3 id="tunneling-with-fun">Tunneling with Fun</h3>
+<p>Now that you know how to set up a tunnel, you would start doing it all the time (at least I do). To give you a real-life example, I am using tunneling mainly for <a href="https://jupyter.org/">Jupyter notebooks</a> and for <a href="https://www.tensorflow.org/guide/summaries_and_tensorboard">Tensorboard</a>. The Tensorboard server doesn’t consume many resources, but the notebooks sometimes do. As I use different machines for different projects (to balance loadings), and therefore different tunnels , I couldn’t recall what port is used for what application, not to mention on which server.</p>
+<p>As eventually, we forward to our own machine, the only controled variables are the port numbers, and well, numbers are forgotten quickly. I recently found a partial solution for that. Instead of opening the applications on localhost:xxxx I generated new domain names, which are just forwarding to the localhost host. This doesn’t solve the ports problem, but now as each application gets its own name, there’s no confusion, and after a usage or two, modern browsers will remember the port, so all you have to remember is the meaningful name you came up with.</p>
+<p>For doing the domain forwarding, do the following:</p>
+<ul>
+<li>Open the <code>/etc/hosts</code> file with sudo:</li>
+</ul>
+<pre><code>sudo [vim|nano|...] /etc/hosts</code></pre>
+<ul>
+<li>You should have the following line somewhere (probably just at the top): <code>127.0.0.1       localhost</code></li>
+<li>duplicate that line, and switch the <code>localhost</code> name with whatever meaningful name you have for your application (for example, <code>tensorboard</code>).</li>
+</ul>
+<p>Now you can find your tensorboard application at <code>tensorboard:8100</code>.</p>
+<p>I still don’t have a solution to the porting problem, suggestions are welcome.</p>
+<h3 id="more-convenient-tips">More Convenient Tips</h3>
+<h4 id="keep-ssh-open">Keep SSH Open</h4>
+<p>If you have worked with tunnels for a while, you might have noticed that they tend to not work after several minutes of idle usage. This might be annoying if you are working in parallel on several stuff. This reconnecting issue can be solved quite easily by adding a simple line into an ssh configuration file. This way, every <code>x</code> seconds, a ‘sign-of-life’ signal will be sent to the server. On your local machine, edit the <code>/etc/ssh/ssh_config</code> file (with sudo) and enter the following line after the <code>Host *</code> line:</p>
+<pre><code>ServerAliveInterval 120</code></pre>
+<p>This will apply to all ssh connections. If this might be an issue for you, it’s possible to define it only for specific ssh connections by adding the same line to the <code>~/.ssh/config</code> config file. It will look something like that:</p>
+<pre><code>Host gate
+ HostName gateway.name
+ User user
+ IdentityFile ~/.ssh/gateway
+ ServerAliveInterval 120</code></pre>
+<h4 id="automatic-sshing">Automatic SSHing</h4>
+<p>Now that the tunnels won’t shut down while you’re still working, things look sweet. But then you go to sleep (sometimes we need to), so you suspend/hibernate your computer (we never really turn it off, do we). Next day, you want to go back and work on your notebook, which you work on locally with the open tunnel, but… the connection has closed and you need to reopen it. After a while, you get tired of this either, luckily there’s a solution!</p>
+<p><a href="http://www.harding.motd.ca/autossh/">autossh</a></p>
+<p>This wonderful program will keep your ssh connection open until you close your computer. But until then, your ssh is safe. So for example, you can put your computer to sleep, disconnect the Wifi etc and once you get back online, this program will do the ssh connection for you.</p>
+<p>Install by running:</p>
+<pre><code>sudo apt-get install autossh</code></pre>
+<p>now run the following command:</p>
+<pre><code>autossh -M 20000 -N -f -L localhost:9201:localhost:9100 work1</code></pre>
+<p>which is very similar to the command we saw before, except the command name (duh) and the <code>-M 20000</code> flag which is the port where this monitor lives.</p>
+<h2 id="intellij-integration">IntelliJ Integration</h2>
+<p>In the Pycharm Professional edition, there’s a great feature of connecting to a remote server and work directly on it. You can either write code on your own computer and just run it on the remote server or to fully sync your whole repository on the remote server.</p>
+<p>The interlliJ interface changes from time to time, but the idea is the same. I’ll present the steps for a specific version - V. 2018.1.4.</p>
+<ul>
+<li>Under Pycharm Settings</li>
+<li>Build, Execution, Deployment -&gt; Deployment</li>
+<li>Click on the green + for creating a new Deployment settings</li>
+<li>Enter the relevant information (Name, host, port:22 usually, Root path and username)</li>
+</ul>
+<p>Now with a right click on the project folder, under the Deployment key, you will be able to upload, download or sync your project with the remote location (you can also define a shortcut key for that).</p>
+<p>For using a remote interpreter:</p>
+<ul>
+<li>Go to the project settings</li>
+
+<li>Under the project interpreters bookmark, near the Project Interpreter option, there should be a small wheel button, for options. Click on it and then click on ‘Add’.</li>
+<li>On the left menu, click on SSH Interpreter</li>
+<li>Click on the “Existing server configuration” option and use the deployment configuration we created earlier.</li>
+<li>Choose the remote interpreter (e.g anaconda/python)</li>
+<li>and… you’re done!</li>
+</ul>
+<h2 id="acknowledgments">Acknowledgments</h2>
+<p>I would like to thank <a href="http://fredblain.org/">Fred Blain</a>, <a href="http://u.cs.biu.ac.il/~gonenhi/">Hila Gonen</a>, <a href="https://www.linkedin.com/in/amit-moryossef">Amit Moryossef</a>, <a href="https://il.linkedin.com/in/asaf-amrami-589912bb">Asaf Amrami</a> and <a href="https://vered1986.github.io">Vered Shwartz</a> for their helpful comments.</p>
+<h2 id="reference">Reference</h2>
+<ul>
+<li><a href="https://www.hostinger.com/tutorials/ssh-tutorial-how-does-ssh-work">How does SSH work</a></li>
+<li><a href="http://www.linuxproblem.org/art_9.html">SSH login w/o pass</a></li>
+<li><a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys--2">creating ssh key pair</a></li>
+<li><a href="http://lucasb.eyer.be/articles/two-ssh.html">2-ssh</a></li>
+<li><a href="https://www.ssh.com/ssh/copy-id">ssh-copy</a></li>
+<li><a href="https://nerderati.com/2011/03/17/simplify-your-life-with-an-ssh-config-file/">identity file</a></li>
+</ul>
+</div></div></div></section>
+</body>
+</html>
