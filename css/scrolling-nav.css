@@ -72,8 +72,8 @@ h1,h2 {
 
 
 section#news {
-  padding-top: 80px;
-  padding-bottom: 80px;
+  padding-top: 60px;
+  padding-bottom: 40px;
 }
 
 section#pubs {
@@ -88,7 +88,7 @@ section#contact {
 
 section#posts {
   padding-top: 80px;
-  padding-bottom: 80px;
+  padding-bottom: 60px;
 }
 
 
