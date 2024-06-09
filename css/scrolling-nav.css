@@ -205,3 +205,8 @@ h1#remote-servers,
 h1#attending-acl2020 {
       padding-top: 50px;
 }
+
+
+.nav-color {
+  background-color: #0069d9; /* Dark off-white color code */
+}
