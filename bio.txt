@@ -1,0 +1,1 @@
+Yanai Elazar is a Postdoctoral Researcher at AI2 and the University of Washington. Before that, he did his PhD in Computer Science at Bar-Ilan University. He is interested in the science of language models, for which he develops tools and methods for understanding what makes models work, how, and why.
