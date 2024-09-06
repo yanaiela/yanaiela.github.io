@@ -203,3 +203,24 @@ tl-item.active .tl-dot:before {
 .b-danger {
     border-color: #f54394 !important
 }
+
+
+.timeline-box {
+    display: flex;
+    margin: 20px 0;
+  }
+  
+  .timeline-left {
+    width: 5px;
+    background-color: #007bff; /* Change to your preferred color */
+    margin-right: 0px;
+  }
+  
+  .timeline-content {
+    background-color: #f8f9fa; /* Light grey background */
+    padding: 15px;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+    color: #333;
+    flex: 1;
+  }
