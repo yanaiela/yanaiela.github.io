@@ -16,29 +16,43 @@
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Yanai Elazar's personal academic website">
+  <meta name="description" content="Yanai Elazar's academic website">
   <meta name="author" content="Yanai Elazar">
+  <meta name="keywords" content="Yanai Elazar, NLP, LLM, generative models, AI research, Bar-Ilan University, Machine Learning">
 
-  <meta property="twitter:card" content="summary">
-
-  <meta property="twitter:site" content="@yanaiela">
-  <meta property="twitter:creator" content="@yanaiela">
-
+  <!-- Open Graph / Social Media Meta Tags -->
+  <meta property="og:type" content="website">
   <meta property="og:site_name" content="Yanai Elazar">
   <meta property="og:url" content="https://yanaiela.github.io/">
-  <meta property="og:title" content="Yanai Elazar">
-  <meta property="twitter:image" content="figs/yanai.jpg">
+  <meta property="og:title" content="Yanai Elazar - AI Researcher, Assistant Professor at Bar-Ilan University">
+  <meta property="og:description" content="Academic website of Yanai Elazar, Assistant Professor at Bar-Ilan University">
+  <meta property="og:image" content="https://yanaiela.github.io/figs/yanai.jpg">
   <meta property="og:locale" content="en-us">
+
+  <!-- Twitter Card -->
+  <meta property="twitter:card" content="summary">
+  <meta property="twitter:site" content="@yanaiela">
+  <meta property="twitter:creator" content="@yanaiela">
+  <meta property="twitter:title" content="Yanai Elazar - AI Researcher">
+  <meta property="twitter:description" content="Academic website of Yanai Elazar, Assistant Professor at Bar-Ilan University">
+  <meta property="twitter:image" content="https://yanaiela.github.io/figs/yanai.jpg">
 
 
   <title>Yanai Elazar</title>
   <link rel="icon" type="image/png" href="/figs/favicon.ico"/>
 
+  <!-- Preload critical assets -->
+  <link rel="preload" href="vendor/bootstrap/css/bootstrap.min.css" as="style">
+  <link rel="preload" href="css/scrolling-nav.css" as="style">
+  <link rel="preload" href="figs/yanai2.jpg" as="image">
+
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
+  <!-- Highlighting for code sections if needed -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/github.min.css" crossorigin="anonymous" title="hl-light">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+  
+  <!-- Load lazysizes for image loading optimization -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.2.2/lazysizes.min.js" integrity="sha512-TmDwFLhg3UA4ZG0Eb4MIyT1O1Mb+Oww5kFG0uHqXsdbyZz9DcvYQhKpGgNkamAI6h2lGGZq2X8ftOJvF/XjTUg==" crossorigin="anonymous" async></script>
             
       
@@ -64,7 +78,7 @@
 <body id="page-top">
 
   <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark nav-color fixed-top" id="mainNav">
+  <nav class="navbar navbar-expand-lg navbar-dark nav-color fixed-top" id="mainNav" aria-label="Main Navigation">
     <div class="container">
       <a class="navbar-brand js-scroll-trigger" href="#page-top">Home</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -105,7 +119,7 @@
 
     <div class="row">
         <div class="col-md-4 col-xs-12 how-img text-center">
-            <img src="figs/yanai2.jpg" class="rounded-circle img-fluid" alt=""/>
+            <img src="figs/yanai2.jpg" class="rounded-circle img-fluid" alt="Profile picture of Yanai Elazar" loading="eager"/>
             <br/><br/>
             <div class="pic-about">
               Assistant Professor<br/>
@@ -198,7 +212,7 @@
                           <div class="tl-item">
                             <div class="tl-dot b-warning"></div>
                             <div class="tl-content">
-                                <div class="">Keynote talk at The First Workshop on Large Language Model Memorization (L2M2) @ ACL 2025</a></div>
+                                <div class="">Keynote talk at The First Workshop on Large Language Model Memorization (L2M2) @ ACL 2025</div>
                                 <div class="tl-date text-muted mt-1">August 2025</div>
                             </div>
                           </div>
@@ -215,7 +229,7 @@
                           <div class="tl-item">
                             <div class="tl-dot b-warning"></div>
                             <div class="tl-content">
-                                <div class="">Invited talk at RIKEN, Tokyo</a></div>
+                                <div class="">Invited talk at RIKEN, Tokyo</div>
                                 <div class="tl-date text-muted mt-1">April 2025</div>
                             </div>
                           </div>
@@ -375,13 +389,33 @@
     <!-- /.container -->
   </footer>
 
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-  <script src="js/scrolling-nav.js"></script>
+  <!-- Structured Data for Scholar Profile -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Yanai Elazar",
+    "jobTitle": "Assistant Professor",
+    "worksFor": {
+      "@type": "Organization",
+      "name": "Bar-Ilan University",
+      "url": "https://cs.biu.ac.il/"
+    },
+    "url": "https://yanaiela.github.io/",
+    "sameAs": [
+      "https://twitter.com/yanaiela",
+      "https://scholar.google.co.il/citations?user=7p_Ce8kAAAAJ",
+      "https://github.com/yanaiela",
+      "https://www.semanticscholar.org/author/Yanai-Elazar/51131518"
+    ]
+  }
+  </script>
 
-  
-    
+  <!-- JavaScript Resources -->
+  <script src="vendor/jquery/jquery.min.js" defer></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js" defer></script>
+  <script src="vendor/jquery-easing/jquery.easing.min.js" defer></script>
+  <script src="js/scrolling-nav.js" defer></script>
 
 </body>
 
