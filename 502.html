@@ -11,7 +11,7 @@
 
     gtag('config', 'UA-124565764-1');
   </script>
-
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -31,16 +31,33 @@
 
 
   <title>Yanai Elazar</title>
-  <!-- <link rel="shortcut icon" type="image/jpg" href="figs/favicon.ico"/> -->
+  <link rel="icon" type="image/png" href="/figs/favicon.ico"/>
+
+  <!-- Preload critical assets -->
+  <link rel="preload" href="vendor/bootstrap/css/bootstrap.min.css" as="style">
+  <link rel="preload" href="css/scrolling-nav.css" as="style">
+  <link rel="preload" href="figs/yanai.jpg" as="image">
 
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Icon packs -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <!-- Highlighting for code sections if needed -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+  
+  <!-- Load lazysizes for image loading optimization -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.2.2/lazysizes.min.js" integrity="sha512-TmDwFLhg3UA4ZG0Eb4MIyT1O1Mb+Oww5kFG0uHqXsdbyZz9DcvYQhKpGgNkamAI6h2lGGZq2X8ftOJvF/XjTUg==" crossorigin="anonymous" async></script>
+            
+      
+    
+
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.css" integrity="sha512-1xoFisiGdy9nvho8EgXuXvnpR5GAMSjFwp40gSRE3NwdUdIMIKuPa7bqoUhLD0O/5tPNhteAsE5XyyMi5reQVA==" crossorigin="anonymous">
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha256-FMvZuGapsJLjouA6k7Eo2lusoAX9i0ShlWFG6qt7SLc=" crossorigin="anonymous"> -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" crossorigin="anonymous">
+
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
-  <!-- <link rel="preconnect" href="https://fonts.gstatic.com"> -->
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Benne&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
@@ -98,43 +115,49 @@
             <img src="figs/502.jpg" class="rounded-circle img-fluid" alt=""/>
             <br/><br/>
             <div class="pic-about">
-              Postdoctoral Researcher<br/>
-              AI2 & University of Washington
+              Assistant Professor<br/>
+              Bar-Ilan University
             </div>
-            <ul class="network-icon" aria-hidden="true">
+            <ul class="network-icon">
                  <li>
-                   <a href="https://twitter.com/yanaiela" target="_blank" rel="noopener">
-                     <i class="fa fa-twitter big-icon zoom"></i>
+                   <a href="https://twitter.com/yanaiela" target="_blank" rel="noopener" aria-label="Twitter">
+                     <i class="fab fa-twitter fa-sm zoom"></i>
                    </a>
                  </li>
 
                  <li>
-                   <a href="https://scholar.google.co.il/citations?user=7p_Ce8kAAAAJ" target="_blank" rel="noopener">
+                   <a href="https://bsky.app/profile/yanai.bsky.social" target="_blank" rel="noopener" aria-label="Bluesky">
+                     <i class="fab fa-bluesky fa-xs zoom"></i>
+                   </a>
+                 </li>
+
+                 <li>
+                   <a href="https://scholar.google.co.il/citations?user=7p_Ce8kAAAAJ" target="_blank" rel="noopener" aria-label="Google Scholar">
                      <i class="ai ai-google-scholar big-icon zoom"></i>
                    </a>
                  </li>
 
                  <li>
-                   <a href="https://www.semanticscholar.org/author/Yanai-Elazar/51131518" target="_blank" rel="noopener">
-                     <i class="ai ai-semantic-scholar big-icon zoom"></i>
+                   <a href="https://www.semanticscholar.org/author/Yanai-Elazar/51131518" target="_blank" rel="noopener" aria-label="Semantic Scholar">
+                     <i class="ai ai-semantic-scholar fa- zoom"></i>
                    </a>
                  </li>
 
                  <li>
-                   <a href="https://github.com/yanaiela" target="_blank" rel="noopener">
-                     <i class="fa fa-github big-icon zoom"></i>
-                   </a>
-                 </li>
-
-                 <!-- <li>
-                   <a href="https://www.linkedin.com/in/yanai-elazar-7b345b95/" target="_blank" rel="noopener">
-                     <i class="fa fa-linkedin big-icon zoom"></i>
-                   </a>
-                 </li> -->
-                 <li>
-                  <a href="mailto:yanaie@allenai.org" >
-                    <i class="fa fa-envelope big-icon zoom"></i>
+                  <a href="https://github.com/yanaiela" target="_blank" rel="noopener" aria-label="Github">
+                    <i class="fab fa-github fa-sm zoom"></i>
                   </a>
+                </li>
+
+                 <li>
+                  <a href="mailto:yanaiela@gmail.com" aria-label="Email">
+                    <i class="fa fa-envelope fa-sm zoom"></i>
+                  </a>
+                </li>
+                <li>
+                  <a href="bio.txt" aria-label="Biography">
+                    <i class="fas fa-portrait fa-xs zoom"></i>
+                </a>
                 </li>
                </ul>
 
