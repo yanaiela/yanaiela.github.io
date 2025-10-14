@@ -215,3 +215,47 @@ h1#attending-acl2020 {
 .nav-color {
   background-color: #0069d9; /* Dark off-white color code */
 }
+
+/* Collaborator styles */
+.collaborator {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.collaborator:hover {
+    background-color: #e9ecef;
+}
+
+.collaborator img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 15px;
+    border: 2px solid #dee2e6;
+    flex-shrink: 0;
+}
+
+.collaborator-info {
+    flex-grow: 1;
+}
+
+.collaborator-info a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.collaborator-info a:hover {
+    text-decoration: underline;
+}
+
+.collaborator-description {
+    color: #6c757d;
+    font-size: 0.9em;
+    margin-top: 2px;
+}
