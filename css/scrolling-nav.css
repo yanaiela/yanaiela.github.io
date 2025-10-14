@@ -238,6 +238,8 @@ h1#attending-acl2020 {
     margin-right: 15px;
     border: 2px solid #dee2e6;
     flex-shrink: 0;
+    object-fit: cover;
+    object-position: center;
 }
 
 .collaborator-info {
@@ -258,4 +260,52 @@ h1#attending-acl2020 {
     color: #6c757d;
     font-size: 0.9em;
     margin-top: 2px;
+}
+
+/* Enhanced collaborator details styling */
+.collaborator-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+    align-items: center;
+}
+
+.year-duration {
+    background-color: #007bff;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.75em;
+    font-weight: 500;
+    min-width: 45px;
+    text-align: center;
+}
+
+.affiliation {
+    color: #495057;
+    font-size: 0.85em;
+    flex: 1;
+    min-width: 200px;
+}
+
+.current-location {
+    color: #28a745;
+    font-size: 0.85em;
+    font-weight: 500;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    .collaborator-details {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+    
+    .affiliation,
+    .current-location {
+        font-size: 0.8em;
+        min-width: auto;
+    }
 }
