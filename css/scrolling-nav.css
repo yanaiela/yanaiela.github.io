@@ -295,6 +295,32 @@ h1#attending-acl2020 {
     font-weight: 500;
 }
 
+/* Teaching page styles */
+.course-item {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    border-left: 3px solid #007bff;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+}
+
+.course-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.course-details {
+    color: #666;
+    margin-bottom: 0.5rem;
+}
+
+.semester {
+    font-weight: 500;
+    color: #007bff;
+}
+
 /* Responsive adjustments for smaller screens */
 @media (max-width: 768px) {
     .collaborator-details {
