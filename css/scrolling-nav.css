@@ -75,6 +75,11 @@ h1,h2 {
   background-color: #F68FA0;
 }
 
+.badge-featured {
+  color: #fff;
+  background-color: #9B59B6;
+}
+
 
 section#news {
   padding-top: 60px;
