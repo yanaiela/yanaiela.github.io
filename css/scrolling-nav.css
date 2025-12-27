@@ -340,3 +340,19 @@ h1#attending-acl2020 {
         min-width: auto;
     }
 }
+
+/* Hidden text that becomes visible on selection */
+.hidden-text {
+    color: white;
+    font-size: 1px;
+}
+
+.hidden-text::selection {
+    color: #b3d4fc;
+    background-color: #b3d4fc;
+}
+
+.hidden-text::-moz-selection {
+    color: #b3d4fc;
+    background-color: #b3d4fc;
+}
