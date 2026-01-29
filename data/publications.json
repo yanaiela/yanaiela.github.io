@@ -1,5 +1,15 @@
 [
   {
+    "title": "LLM-Generated or Human-Written? Comparing Review and Non-Review Papers on ArXiv",
+    "authors": "Yanai Elazar, Maria Antoniak",
+    "venue": "arxiv",
+    "year": 2026,
+    "bibtex": "/bibtex/llm-generated-reviews.bib",
+    "links": {
+      "paper": "https://arxiv.org/abs/2601.17036"
+    }
+  },
+  {
     "title": "How Many Images Does It Take? Estimating Imitation Thresholds in Text-to-Image Models",
     "authors": "Sahil Verma, Royi Rassin, Arnav Das, Gantavya Bhatt, Preethi Seshadri, Chirag Shah, Jeff Bilmes, Hannaneh Hajishirzi, Yanai Elazar",
     "venue": "TMLR 2025",
