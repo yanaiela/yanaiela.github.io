@@ -106,6 +106,35 @@
         <div class="col-lg-8 mx-auto">
           <h2>Publications</h2>
 
+          <div class="pub-filters mb-4">
+            <div class="row g-2 align-items-end">
+              <div class="col-md-3">
+                <label for="pub-search" class="form-label">Search titles</label>
+                <input type="text" class="form-control form-control-sm" id="pub-search" placeholder="e.g. language models">
+              </div>
+              <div class="col-md-2">
+                <label for="pub-year" class="form-label">Year</label>
+                <select class="form-select form-select-sm" id="pub-year">
+                  <option value="">All years</option>
+                </select>
+              </div>
+              <div class="col-md-2">
+                <label for="pub-venue" class="form-label">Venue</label>
+                <select class="form-select form-select-sm" id="pub-venue">
+                  <option value="">All venues</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label for="pub-author" class="form-label">Author</label>
+                <input type="text" class="form-control form-control-sm" id="pub-author" placeholder="e.g. Smith">
+              </div>
+              <div class="col-md-2">
+                <button type="button" class="btn btn-outline-secondary btn-sm w-100" id="pub-clear-filters">Clear filters</button>
+              </div>
+            </div>
+            <div id="pub-result-count" class="text-muted mt-2" style="font-size: 0.9em;"></div>
+          </div>
+
           <div id="publications-container">
             <noscript>Please enable JavaScript to view publications.</noscript>
           </div>

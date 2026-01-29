@@ -1,12 +1,17 @@
 (function () {
   'use strict';
 
+  var allPublications = [];
+
   function initPublications() {
     fetch('/data/publications.json')
       .then(function (res) { return res.json(); })
       .then(function (pubs) {
+        allPublications = pubs;
+        populateFilterDropdowns(pubs);
         renderPublications(pubs);
         bindCiteModals();
+        bindFilterEvents();
         if (window.MathJax && MathJax.typesetPromise) {
           MathJax.typesetPromise();
         }
@@ -19,6 +24,154 @@
         }
       });
   }
+
+  // --- Venue normalization ---
+
+  function normalizeVenue(pub) {
+    var venue = pub.venue;
+
+    // Group all workshops together
+    if (pub.paperType === 'workshop' || /workshop/i.test(venue)) {
+      return 'Workshop';
+    }
+
+    // Group system demonstrations together (strip conference prefix)
+    if (/system demonstrations/i.test(venue)) {
+      return 'System Demonstrations';
+    }
+
+    // Group NeurIPS and its tracks together
+    if (/^neurips/i.test(venue)) {
+      return 'NeurIPS';
+    }
+
+    // Strip "(presented at ...)" parenthetical FIRST
+    var v = venue.replace(/\s*\(presented at [^)]+\)$/i, '');
+    // Strip trailing modifiers like ", spotlight"
+    v = v.replace(/,\s*[^,]+$/, '');
+    // Strip year (4-digit number preceded by whitespace, anywhere in string)
+    v = v.replace(/\s+\d{4}/, '');
+    return v.trim();
+  }
+
+  // --- Populate filter dropdowns ---
+
+  function populateFilterDropdowns(pubs) {
+    var yearSet = {};
+    var venueSet = {};
+
+    pubs.forEach(function (pub) {
+      yearSet[pub.year] = true;
+      venueSet[normalizeVenue(pub)] = true;
+    });
+
+    var years = Object.keys(yearSet).map(Number).sort(function (a, b) { return b - a; });
+    var venues = Object.keys(venueSet).sort();
+
+    var yearSelect = document.getElementById('pub-year');
+    if (yearSelect) {
+      years.forEach(function (y) {
+        var opt = document.createElement('option');
+        opt.value = y;
+        opt.textContent = y;
+        yearSelect.appendChild(opt);
+      });
+    }
+
+    var venueSelect = document.getElementById('pub-venue');
+    if (venueSelect) {
+      venues.forEach(function (v) {
+        var opt = document.createElement('option');
+        opt.value = v;
+        opt.textContent = v;
+        venueSelect.appendChild(opt);
+      });
+    }
+  }
+
+  // --- Filtering ---
+
+  function filterPublications() {
+    var searchVal = (document.getElementById('pub-search').value || '').toLowerCase();
+    var yearVal = document.getElementById('pub-year').value;
+    var venueVal = document.getElementById('pub-venue').value;
+    var authorVal = (document.getElementById('pub-author').value || '').toLowerCase();
+
+    var filtered = allPublications.filter(function (pub) {
+      if (searchVal && pub.title.toLowerCase().indexOf(searchVal) === -1) return false;
+      if (yearVal && String(pub.year) !== yearVal) return false;
+      if (venueVal && normalizeVenue(pub) !== venueVal) return false;
+      if (authorVal && pub.authors.toLowerCase().indexOf(authorVal) === -1) return false;
+      return true;
+    });
+
+    var container = document.getElementById('publications-container');
+    if (container) {
+      container.innerHTML = '';
+      if (filtered.length === 0) {
+        var msg = document.createElement('p');
+        msg.id = 'pub-no-results';
+        msg.textContent = 'No publications match the current filters.';
+        container.appendChild(msg);
+      } else {
+        renderPublications(filtered);
+      }
+    }
+
+    updateResultCount(filtered.length, allPublications.length);
+
+    // Re-run MathJax on newly rendered content
+    if (window.MathJax && MathJax.typesetPromise) {
+      MathJax.typesetPromise();
+    }
+  }
+
+  function updateResultCount(shown, total) {
+    var el = document.getElementById('pub-result-count');
+    if (!el) return;
+    var hasActiveFilter =
+      document.getElementById('pub-search').value ||
+      document.getElementById('pub-year').value ||
+      document.getElementById('pub-venue').value ||
+      document.getElementById('pub-author').value;
+    if (hasActiveFilter) {
+      el.textContent = 'Showing ' + shown + ' of ' + total + ' publications';
+    } else {
+      el.textContent = '';
+    }
+  }
+
+  // --- Event binding ---
+
+  function debounce(fn, delay) {
+    var timer;
+    return function () {
+      clearTimeout(timer);
+      timer = setTimeout(fn, delay);
+    };
+  }
+
+  function bindFilterEvents() {
+    var searchInput = document.getElementById('pub-search');
+    var yearSelect = document.getElementById('pub-year');
+    var venueSelect = document.getElementById('pub-venue');
+    var authorInput = document.getElementById('pub-author');
+    var clearBtn = document.getElementById('pub-clear-filters');
+
+    if (searchInput) searchInput.addEventListener('input', debounce(filterPublications, 200));
+    if (yearSelect) yearSelect.addEventListener('change', filterPublications);
+    if (venueSelect) venueSelect.addEventListener('change', filterPublications);
+    if (authorInput) authorInput.addEventListener('input', debounce(filterPublications, 200));
+    if (clearBtn) clearBtn.addEventListener('click', function () {
+      if (searchInput) searchInput.value = '';
+      if (yearSelect) yearSelect.value = '';
+      if (venueSelect) venueSelect.value = '';
+      if (authorInput) authorInput.value = '';
+      filterPublications();
+    });
+  }
+
+  // --- Rendering (unchanged logic) ---
 
   function renderPublications(publications) {
     var container = document.getElementById('publications-container');
