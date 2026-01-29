@@ -1,0 +1,641 @@
+[
+  {
+    "title": "How Many Images Does It Take? Estimating Imitation Thresholds in Text-to-Image Models",
+    "authors": "Sahil Verma, Royi Rassin, Arnav Das, Gantavya Bhatt, Preethi Seshadri, Chirag Shah, Jeff Bilmes, Hannaneh Hajishirzi, Yanai Elazar",
+    "venue": "TMLR 2025",
+    "year": 2025,
+    "bibtex": "/bibtex/van-gogh.bib",
+    "paperType": "journal",
+    "links": {
+      "paper": "https://arxiv.org/abs/2410.15002",
+      "code": "https://github.com/vsahil/MIMETIC-2",
+      "webpage": "https://how-many-van-goghs-does-it-take.github.io/",
+      "blog": "https://allenai.org/blog/imitation-threshold"
+    }
+  },
+  {
+    "title": "Rewriting History: A Recipe for Interventional Analyses to Study Data Effects on Model Behavior",
+    "authors": "Rahul Nadkarni, Yanai Elazar, Hila Gonen, Noah A. Smith",
+    "venue": "arxiv",
+    "year": 2025,
+    "bibtex": "/bibtex/rewriting-history.bib",
+    "links": {
+      "paper": "https://arxiv.org/abs/2510.14261",
+      "code": "https://github.com/rahuln/pretrain-intervention"
+    }
+  },
+  {
+    "title": "Chain-of-Thought Is Not Explainability",
+    "authors": "Fazl Barez, Tung-Yu Wu, Iv\u00e1n Arcuschin, Michael Lan, Vincent Wang, Noah Siegel, Nicolas Collignon, Clement Neo, Isabelle Lee, Alasdair Paren, Adel Bibi, Robert Trager, Damiano Fornasiere, John Yan, Yanai Elazar, Yoshua Bengio",
+    "venue": "arxiv",
+    "year": 2025,
+    "bibtex": "/bibtex/cot-interpretability.bib",
+    "links": {
+      "paper": "https://www.alphaxiv.org/abs/2025.02"
+    }
+  },
+  {
+    "title": "Hybrid Preferences: Learning to Route Instances for Human vs. AI Feedback",
+    "authors": "*Lester James V. Miranda, *Yizhong Wang, Yanai Elazar, Sachin Kumar, Valentina Pyatkin, Faeze Brahman, Noah A. Smith, Hannaneh Hajishirzi, Pradeep Dasigi",
+    "venue": "ACL 2025",
+    "year": 2025,
+    "bibtex": "/bibtex/hybrid-preferences.bib",
+    "links": {
+      "paper": "https://arxiv.org/abs/2410.19133",
+      "code": "https://github.com/allenai/hybrid-preferences",
+      "resource": "https://huggingface.co/datasets/allenai/multipref",
+      "slides": "presentations/HybridPreferences-Poster.pdf",
+      "slidesLabel": "poster",
+      "blog": "https://blog.allenai.org/hybrid-preferences-learning-to-route-instances-for-human-vs-ai-feedback-6bed4b68c0a2"
+    }
+  },
+  {
+    "title": "OLMoTrace: Tracing Language Model Outputs Back to Trillions of Training Tokens",
+    "authors": "Jiacheng Liu, Taylor Blanton, Yanai Elazar, Sewon Min, YenSung Chen, Arnavi Chheda-Kothary, Huy Tran, Byron Bischoff, Eric Marsh, Michael Schmitz, Cassidy Trier, Aaron Sarnat, Jenna James, Jon Borchardt, Bailey Kuehl, Evie Cheng, Karen Farley, Sruthi Sreeram, Taira Anderson, David Albright, Carissa Schoenick, Luca Soldaini, Dirk Groeneveld, Rock Yuren Pang, Pang Wei Koh, Noah A. Smith, Sophie Lebrecht, Yejin Choi, Hannaneh Hajishirzi, Ali Farhadi, Jesse Dodge",
+    "venue": "ACL system demonstrations 2025",
+    "year": 2025,
+    "award": "\ud83c\udfc6 Best Demo Award",
+    "bibtex": "/bibtex/olmotrace.bib",
+    "links": {
+      "paper": "https://arxiv.org/abs/2504.07096",
+      "demo": "https://playground.allenai.org/"
+    }
+  },
+  {
+    "title": "Better Aligned with Survey Respondents or Training Data? Unveiling Political Leanings of LLMs on U.S. Supreme Court Cases",
+    "authors": "Shanshan Xu, T.Y.S.S Santosh, Yanai Elazar, Quirin Vogel, Barbara Plank, Matthias Grabmair",
+    "venue": "The First Workshop on Large Language Model Memorization @ ACL 2025",
+    "year": 2025,
+    "bibtex": "/bibtex/political-alignment.bib",
+    "paperType": "workshop",
+    "links": {
+      "paper": "https://arxiv.org/abs/2502.18282",
+      "code": "https://github.com/TUMLegalTech/scotus_alignment",
+      "slides": "presentations/political-alignment.pdf",
+      "slidesLabel": "poster"
+    }
+  },
+  {
+    "title": "On Linear Representations and Pretraining Data Frequency in Language Models",
+    "authors": "Jack Merullo, Noah A. Smith, *Sarah Wiegreffe, *Yanai Elazar",
+    "venue": "ICLR 2025",
+    "year": 2025,
+    "bibtex": "/bibtex/linear-representation-data.bib",
+    "links": {
+      "paper": "https://openreview.net/pdf?id=EDoD3DgivF",
+      "slides": "presentations/linear-representation.pdf",
+      "slidesLabel": "poster"
+    }
+  },
+  {
+    "title": "Generalization v.s. Memorization: Tracing Language Models' Capabilities Back to Pretraining Data",
+    "authors": "*Xinyi Wang, *Antonis Antoniades, Yanai Elazar, Alfonso Amayuelas, Alon Albalak, Kexun Zhang, William Yang Wang",
+    "venue": "ICLR 2025",
+    "year": 2025,
+    "bibtex": "/bibtex/gen-mem.bib",
+    "links": {
+      "paper": "https://arxiv.org/abs/2407.14985",
+      "code": "https://github.com/a-antoniades/llm-corpus-search",
+      "slides": "presentations/gen_vs_mem.pdf",
+      "slidesLabel": "poster"
+    }
+  },
+  {
+    "title": "Calibrating Large Language Models with Sample Consistency",
+    "authors": "*Qing Lyu, *Kumar Shridhar, Chaitanya Malaviya, Li Zhang, Yanai Elazar, Niket Tandon, Marianna Apidianaki, Mrinmaya Sachan, Chris Callison-Burch",
+    "venue": "AAAI 2025",
+    "year": 2025,
+    "bibtex": "/bibtex/calibrating-consistency.bib",
+    "links": {
+      "paper": "https://arxiv.org/abs/2402.13904",
+      "code": "https://github.com/veronica320/Calibrating-LLMs-with-Consistency"
+    }
+  },
+  {
+    "title": "GRADE: Quantifying Sample Diversity in Text-to-Image Models",
+    "authors": "Royi Rassin, Aviv Slobodkin, Shauli Ravfogel, Yanai Elazar, Yoav Goldberg",
+    "venue": "arxiv",
+    "year": 2024,
+    "bibtex": "/bibtex/grade.bib",
+    "links": {
+      "paper": "https://arxiv.org/abs/2410.22592",
+      "code": "https://github.com/RoyiRa/GRADE-Quantifying-sample-diversity-in-text-to-image-models",
+      "webpage": "https://royira.github.io/GRADE/"
+    }
+  },
+  {
+    "title": "Paloma: A Benchmark for Evaluating Language Model Fit",
+    "authors": "Ian Magnusson, Akshita Bhagia, Valentin Hofmann, Luca Soldaini, Ananya Harsh Jha, Oyvind Tafjord, Dustin Schwenk, Evan Pete Walsh, Yanai Elazar, Kyle Lo, Dirk Groeneveld, Iz Beltagy, Hannaneh Hajishirzi, Noah A. Smith, Kyle Richardson, Jesse Dodge",
+    "venue": "NeurIPS 2024 Track Datasets and Benchmarks",
+    "year": 2024,
+    "bibtex": "/bibtex/paloma.bib",
+    "links": {
+      "paper": "https://arxiv.org/abs/2312.10523",
+      "code": "https://github.com/allenai/ai2-olmo-eval/tree/main/paloma",
+      "resource": "https://huggingface.co/collections/allenai/paloma-6580bf704daa78a2f2668838"
+    }
+  },
+  {
+    "title": "Evaluating \\( n \\)-Gram Novelty of Language Models Using Rusty-DAWG",
+    "authors": "William Merrill, Noah A. Smith, Yanai Elazar",
+    "venue": "EMNLP 2024",
+    "year": 2024,
+    "bibtex": "/bibtex/ngram-novelty.bib",
+    "paperType": "long",
+    "links": {
+      "paper": "https://arxiv.org/abs/2406.13069",
+      "code": "https://github.com/viking-sudo-rm/rusty-dawg/"
+    }
+  },
+  {
+    "title": "Detection and Measurement of Syntactic Templates in Generated Text",
+    "authors": "Chantal Shaib, Yanai Elazar, Junyi Jessy Li, Byron C. Wallace",
+    "venue": "EMNLP 2024",
+    "year": 2024,
+    "bibtex": "/bibtex/syntactic-templates.bib",
+    "paperType": "long",
+    "links": {
+      "paper": "https://arxiv.org/abs/2407.00211",
+      "code": "https://github.com/cshaib/syntactic_templates",
+      "webpage": "https://cshaib.github.io/syntactic_templates/"
+    }
+  },
+  {
+    "title": "Applying Intrinsic Debiasing on Downstream Tasks: Challenges and Considerations for Machine Translation",
+    "authors": "Bar Iluz, Yanai Elazar, Asaf Yehudai, Gabriel Stanovsky",
+    "venue": "EMNLP 2024",
+    "year": 2024,
+    "bibtex": "/bibtex/intrinsic-bias.bib",
+    "paperType": "short",
+    "links": {
+      "paper": "https://arxiv.org/abs/2406.00787"
+    }
+  },
+  {
+    "title": "Measuring and Improving Attentiveness to Partial Inputs with Counterfactuals",
+    "authors": "Yanai Elazar, Bhargavi Paranjape, Hao Peng, Sarah Wiegreffe, Khyathi Raghavi, Vivek Srikumar, Sameer Singh, Noah A. Smith",
+    "venue": "Findings of EMNLP 2024",
+    "year": 2024,
+    "bibtex": "/bibtex/cat.bib",
+    "paperType": "long",
+    "links": {
+      "paper": "https://arxiv.org/abs/2311.09605"
+    }
+  },
+  {
+    "title": "Data Contamination Report from the 2024 CONDA Shared Task",
+    "authors": "Oscar Sainz, Iker Garc\u00eda-Ferrero, Alon Jacovi, Jon Ander Campos, Yanai Elazar, Eneko Agirre, Yoav Goldberg, Wei-Lin Chen, Jenny Chim, Leshem Choshen, Luca D'Amico-Wong, Melissa Dell, Run-Ze Fan, Shahriar Golchin, Yucheng Li, Pengfei Liu, Bhavish Pahwa, Ameya Prabhu, Suryansh Sharma, Emily Silcock, Kateryna Solonko, David Stap, Mihai Surdeanu, Yu-Min Tseng, Vishaal Udandarao, Zengzhi Wang, Ruijie Xu, Jinglin Yang",
+    "venue": "CONDA Workshop @ ACL 2024",
+    "year": 2024,
+    "bibtex": "/bibtex/conda-report.bib",
+    "paperType": "workshop",
+    "links": {
+      "paper": "https://arxiv.org/abs/2407.21530",
+      "resource": "https://huggingface.co/spaces/CONDA-Workshop/Data-Contamination-Database"
+    }
+  },
+  {
+    "title": "OLMo: Accelerating the Science of Language Models",
+    "authors": "Dirk Groeneveld, Iz Beltagy, Pete Walsh, Akshita Bhagia, Rodney Kinney, Oyvind Tafjord, Ananya Harsh Jha, Hamish Ivison, Ian Magnusson, Yizhong Wang, Shane Arora, David Atkinson, Russell Authur, Khyathi Raghavi Chandu, Arman Cohan, Jennifer Dumas, Yanai Elazar, Yuling Gu, Jack Hessel, Tushar Khot, William Merrill, Jacob Morrison, Niklas Muennighoff, Aakanksha Naik, Crystal Nam, Matthew E. Peters, Valentina Pyatkin, Abhilasha Ravichander, Dustin Schwenk, Saurabh Shah, Will Smith, Emma Strubell, Nishant Subramani, Mitchell Wortsman, Pradeep Dasigi, Nathan Lambert, Kyle Richardson, Luke Zettlemoyer, Jesse Dodge, Kyle Lo, Luca Soldaini, Noah A. Smith, Hannaneh Hajishirzi",
+    "venue": "ACL 2024",
+    "year": 2024,
+    "award": "\ud83c\udfc6 Best Theme Paper",
+    "bibtex": "/bibtex/olmo.bib",
+    "paperType": "long",
+    "links": {
+      "paper": "https://arxiv.org/abs/2402.00838",
+      "code": "https://github.com/allenai/OLMo",
+      "resource": "https://huggingface.co/datasets/allenai/dolma",
+      "models": "https://huggingface.co/allenai/OLMo-7B"
+    },
+    "press": [
+      {"name": "TechCrunch", "url": "https://techcrunch.com/2024/02/01/ai2-open-sources-text-generating-ai-models-and-the-data-used-to-train-them/"},
+      {"name": "Axios", "url": "https://www.axios.com/2024/02/01/allen-institute-for-ai-fully-open-source-large-language-model-olmo-7b"},
+      {"name": "Forbes", "url": "https://www.forbes.com/sites/janakirammsv/2024/02/05/how-olmo-from-the-ai2-redefines-llm-innovation/?sh=7927742b6147"},
+      {"name": "GeekWire", "url": "https://www.geekwire.com/2024/allen-institute-for-ai-promises-new-insights-into-large-language-models-with-olmo-release/"},
+      {"name": "SD Times", "url": "https://sdtimes.com/ai/ai2-releases-olmo-an-open-llm/"},
+      {"name": "VentureBeat", "url": "https://venturebeat.com/ai/truly-open-source-llm-from-ai2-to-drive-critical-shift-in-ai-development/"},
+      {"name": "Fast Company", "url": "https://www.fastcompany.com/91021305/ai2-new-open-source-llm?partner=rss&utm_source=rss&utm_medium=feed&utm_campaign=rss+fastcompany&utm_content=rss"}
+    ]
+  },
+  {
+    "title": "Dolma: an Open Corpus of Three Trillion Tokens for Language Model Pretraining Research",
+    "authors": "Luca Soldaini, Rodney Kinney, Akshita Bhagia, Dustin Schwenk, David Atkinson, Russell Authur, Ben Bogin, Khyathi Chandu, Jennifer Dumas, Yanai Elazar, Valentin Hofmann, Ananya Harsh Jha, Sachin Kumar, Li Lucy, Xinxi Lyu, Nathan Lambert, Ian Magnusson, Jacob Morrison, Niklas Muennighoff, Aakanksha Naik, Crystal Nam, Matthew E. Peters, Abhilasha Ravichander, Kyle Richardson, Zejiang Shen, Emma Strubell, Nishant Subramani, Oyvind Tafjord, Pete Walsh, Luke Zettlemoyer, Noah A. Smith, Hannaneh Hajishirzi, Iz Beltagy, Dirk Groeneveld, Jesse Dodge, Kyle Lo",
+    "venue": "ACL 2024",
+    "year": 2024,
+    "award": "\ud83c\udfc6 Best Resource Paper",
+    "bibtex": "/bibtex/dolma.bib",
+    "paperType": "long",
+    "links": {
+      "paper": "https://arxiv.org/abs/2402.00159",
+      "code": "https://github.com/allenai/dolma",
+      "resource": "https://huggingface.co/datasets/allenai/dolma"
+    }
+  },
+  {
+    "title": "The Bias Amplification Paradox in Text-to-Image Generation",
+    "authors": "Preethi Seshadri, Sameer Singh, Yanai Elazar",
+    "venue": "NAACL 2024",
+    "year": 2024,
+    "bibtex": "/bibtex/bias-amplification-paradox.bib",
+    "paperType": "long",
+    "links": {
+      "paper": "https://arxiv.org/abs/2308.00755",
+      "code": "https://github.com/preethiseshadri518/bias-amplification-paradox/",
+      "slides": "presentations/bias-amplification-paradox-poster.pdf",
+      "slidesLabel": "poster"
+    }
+  },
+  {
+    "title": "A Survey on Data Selection for Language Models",
+    "authors": "Alon Albalak, Yanai Elazar, Sang Michael Xie, Shayne Longpre, Nathan Lambert, Xinyi Wang, Niklas Muennighoff, Bairu Hou, Liangming Pan, Haewon Jeong, Colin Raffel, Shiyu Chang, Tatsunori Hashimoto, William Yang Wang",
+    "venue": "TMLR 2024",
+    "year": 2024,
+    "bibtex": "/bibtex/data-selection-survey.bib",
+    "paperType": "journal",
+    "links": {
+      "paper": "https://arxiv.org/abs/2402.16827",
+      "featured": "https://jmlr.org/tmlr/papers/",
+      "resource": "https://github.com/alon-albalak/data-selection-survey"
+    }
+  },
+  {
+    "title": "Backtracking Mathematical Reasoning of Language Models to the Pretraining Data",
+    "authors": "*Yasaman Razeghi, *Hamish Ivison, Sameer Singh, Yanai Elazar",
+    "venue": "Tiny Papers, ICLR 2024",
+    "year": 2024,
+    "bibtex": "/bibtex/math-att.bib",
+    "paperType": "workshop",
+    "links": {
+      "paper": "https://openreview.net/forum?id=EKvqw9k3lC"
+    }
+  },
+  {
+    "title": "What's In My Big Data?",
+    "authors": "Yanai Elazar, Akshita Bhagia, Ian Magnusson, Abhilasha Ravichander, Dustin Schwenk, Alane Suhr, Pete Walsh, Dirk Groeneveld, Luca Soldaini, Sameer Singh, Hanna Hajishirzi, Noah A. Smith, Jesse Dodge",
+    "venue": "ICLR 2024, spotlight",
+    "year": 2024,
+    "bibtex": "/bibtex/wimbd.bib",
+    "links": {
+      "paper": "https://arxiv.org/abs/2310.20707",
+      "code": "https://github.com/allenai/wimbd",
+      "demo": "https://wimbd.apps.allenai.org/",
+      "slides": "presentations/WIMBD-poster.pdf",
+      "slidesLabel": "poster"
+    },
+    "extraDemos": [
+      {"label": "\ud83e\udd17 HF demo", "url": "https://huggingface.co/spaces/yanaiela/wimbd"}
+    ],
+    "press": [
+      {"name": "Marktechpost", "url": "https://www.marktechpost.com/2023/11/05/peeking-inside-pandoras-box-unveiling-the-hidden-complexities-of-language-model-datasets-with-whats-in-my-big-data-wimbd/"},
+      {"name": "Washington Post", "url": "https://www.washingtonpost.com/technology/interactive/2023/ai-chatbot-learning/"}
+    ]
+  },
+  {
+    "title": "Estimating the Causal Effect of Early ArXiving on Paper Acceptance",
+    "authors": "*Yanai Elazar, *Jiayao Zhang, *David Wadden, Bo Zhang, Noah A. Smith",
+    "venue": "CLeaR 2024",
+    "year": 2024,
+    "bibtex": "/bibtex/arxiv-causal.bib",
+    "links": {
+      "paper": "https://arxiv.org/abs/2306.13891",
+      "code": "https://github.com/allenai/anonymity-period",
+      "slides": "presentations/CLeaR-Anonymity-Poster.pdf",
+      "slidesLabel": "poster"
+    },
+    "press": [
+      {"name": "Causal Bandits podcast", "url": "https://youtu.be/vW2vB6e-Mm8?si=Bj_xMD9iBxY_MIa9&t=880"}
+    ]
+  },
+  {
+    "title": "A taxonomy and review of generalization research in NLP",
+    "authors": "Dieuwke Hupkes, Mario Giulianelli, Verna Dankers, Mikel Artetxe, Yanai Elazar, Tiago Pimentel, Christos Christodoulopoulos, Karim Lasri, Naomi Saphra, Arabella Sinclair, Dennis Ulmer, Florian Schottmann, Khuyagbaatar Batsuren, Kaiser Sun, Koustuv Sinha, Leila Khalatbari, Rita Frieske, Ryan Cotterell, Zhijing Jin",
+    "venue": "Nature Machine Intelligence 2023",
+    "year": 2023,
+    "bibtex": "/bibtex/genbench.bib",
+    "paperType": "journal",
+    "links": {
+      "paper": "https://www.nature.com/articles/s42256-023-00729-y",
+      "projectPage": "https://genbench.github.io/"
+    }
+  },
+  {
+    "title": "Few-shot Fine-tuning vs. In-context Learning: A Fair Comparison and Evaluation",
+    "authors": "Marius Mosbach, Tiago Pimentel, Shauli Ravfogel, Dietrich Klakow, Yanai Elazar",
+    "venue": "Findings of ACL 2023",
+    "year": 2023,
+    "bibtex": "/bibtex/ft-icl.bib",
+    "paperType": "long",
+    "links": {
+      "paper": "https://arxiv.org/abs/2305.16938",
+      "code": "https://github.com/uds-lsv/llmft",
+      "slides": "presentations/ft-icl-2023.pdf",
+      "slidesLabel": "poster"
+    }
+  },
+  {
+    "title": "CIKQA: Learning Commonsense Inference with a Unified Knowledge-in-the-loop QA Paradigm",
+    "authors": "Hongming Zhang, Yintong Huo, Yanai Elazar, Yangqiu Song, Yoav Goldberg, Dan Roth",
+    "venue": "Findings of EACL 2023",
+    "year": 2023,
+    "bibtex": "/bibtex/cikqa.bib",
+    "paperType": "long",
+    "links": {
+      "paper": "https://arxiv.org/abs/2210.06246",
+      "code": "https://github.com/CogComp/CIKQA"
+    }
+  },
+  {
+    "title": "Lexical Generalization Improves with Larger Models and Longer Training",
+    "authors": "Elron Bandel, Yoav Goldberg, Yanai Elazar",
+    "venue": "Findings of EMNLP 2022",
+    "year": 2022,
+    "bibtex": "/bibtex/lex-gen.bib",
+    "paperType": "short",
+    "links": {
+      "paper": "https://arxiv.org/abs/2210.12673",
+      "code": "https://github.com/elronbandel/lexical-generalization",
+      "slides": "presentations/lexical-generalization-emnlp22.pdf",
+      "slidesLabel": "poster"
+    }
+  },
+  {
+    "title": "Measuring Causal Effects of Data Statistics on Language Model's `Factual' Predictions",
+    "authors": "Yanai Elazar, Nora Kassner, Shauli Ravfogel, Amir Feder, Abhilasha Ravichander, Marius Mosbach, Yonatan Belinkov, Hinrich Sch\u00fctze, Yoav Goldberg",
+    "venue": "arxiv",
+    "year": 2022,
+    "bibtex": "/bibtex/causal-statistics.bib",
+    "links": {
+      "paper": "https://arxiv.org/abs/2207.14251",
+      "models": "https://huggingface.co/yanaiela/roberta-base-epoch_83"
+    }
+  },
+  {
+    "title": "Text-based NP Enrichment",
+    "authors": "*Yanai Elazar, *Victoria Basmov, Yoav Goldberg, Reut Tsarfaty",
+    "venue": "TACL 2022",
+    "year": 2022,
+    "bibtex": "/bibtex/tne.bib",
+    "paperType": "journal",
+    "links": {
+      "paper": "https://arxiv.org/abs/2109.12085",
+      "code": "https://github.com/yanaiela/TNE",
+      "resource": "https://huggingface.co/datasets/tne",
+      "demo": "https://yanaiela.github.io/TNE/demo",
+      "projectPage": "https://yanaiela.github.io/TNE",
+      "slides": "presentations/tne.pdf",
+      "video": "https://underline.io/lecture/54878-text-based-np-enrichment"
+    }
+  },
+  {
+    "title": "Revisiting Few-shot Relation Classification: Evaluation Data and Classification Schemes",
+    "authors": "Ofer Sabo, Yanai Elazar, Yoav Goldberg, Ido Dagan",
+    "venue": "TACL 2021",
+    "year": 2021,
+    "bibtex": "/bibtex/revisiting-fsrc.bib",
+    "paperType": "journal",
+    "links": {
+      "paper": "https://arxiv.org/abs/2104.08481",
+      "code": "https://github.com/ofersabo/Few_Shot_transformation_and_sampling",
+      "video": "https://aclanthology.org/2021.tacl-1.42.mp4"
+    }
+  },
+  {
+    "title": "Back to Square One: Bias Detection, Training and Commonsense Disentanglement in the Winograd Schema",
+    "authors": "Yanai Elazar, Hongming Zhang, Yoav Goldberg, Dan Roth",
+    "venue": "EMNLP 2021",
+    "year": 2021,
+    "bibtex": "/bibtex/winograd.bib",
+    "paperType": "long",
+    "links": {
+      "paper": "https://arxiv.org/abs/2104.08161",
+      "code": "https://github.com/yanaiela/winograd_square_one/",
+      "slides": "presentations/winograd.pdf",
+      "video": "https://aclanthology.org/2021.emnlp-main.819.mp4"
+    }
+  },
+  {
+    "title": "Contrastive Explanations for Model Interpretability",
+    "authors": "Alon Jacovi, Swabha Swayamdipta, Shauli Ravfogel, Yanai Elazar, Yejin Choi, Yoav Goldberg",
+    "venue": "EMNLP 2021",
+    "year": 2021,
+    "bibtex": "/bibtex/contrastive.bib",
+    "paperType": "long",
+    "links": {
+      "paper": "https://arxiv.org/abs/2103.01378",
+      "code": "https://github.com/allenai/contrastive-explanations",
+      "video": "https://aclanthology.org/2021.emnlp-main.120.mp4"
+    }
+  },
+  {
+    "title": "Measuring and Improving Consistency in Pretrained Language Models",
+    "authors": "Yanai Elazar, Nora Kassner, Shauli Ravfogel, Abhilasha Ravichander, Eduard Hovy, Hinrich Sch\u00fctze, Yoav Goldberg",
+    "venue": "TACL 2021",
+    "year": 2021,
+    "bibtex": "/bibtex/consistency.bib",
+    "paperType": "journal",
+    "links": {
+      "paper": "https://arxiv.org/abs/2102.01017",
+      "code": "https://github.com/yanaiela/pararel",
+      "resource": "https://github.com/yanaiela/pararel/tree/main/data/pattern_data/graphs_json",
+      "slides": "presentations/consistency.pdf",
+      "video": "https://underline.io/lecture/38196-measuring-and-improving-consistency-in-pretrained-language-models"
+    }
+  },
+  {
+    "title": "First Align, then Predict: Understanding the Cross-Lingual Ability of Multilingual BERT",
+    "authors": "Benjamin Muller, Yanai Elazar, Beno\u00eet Sagot and Djam\u00e9 Seddah",
+    "venue": "EACL 2021",
+    "year": 2021,
+    "bibtex": "/bibtex/mbert-align.bib",
+    "paperType": "short",
+    "links": {
+      "paper": "https://www.aclweb.org/anthology/2021.eacl-main.189.pdf",
+      "code": "https://github.com/benjamin-mlr/first-align-then-predict"
+    }
+  },
+  {
+    "title": "*Amnesic Probing: Behavioral Explanation with Amnesic Counterfactuals",
+    "authors": "Yanai Elazar, Shauli Ravfogel, Alon Jacovi, Yoav Goldberg",
+    "venue": "TACL 2021",
+    "year": 2021,
+    "note": "(*) previous version that appeared on arxiv was named: \"<i>When Bert Forgets How To POS: Amnesic Probing of Linguistic Properties and MLM Predictions</i>\", which we changed to the current title to better reflect our contributions.",
+    "bibtex": "/bibtex/amnesic-probing.bib",
+    "paperType": "journal",
+    "paperTypeUrl": "https://direct.mit.edu/tacl/article/doi/10.1162/tacl_a_00359/98091",
+    "links": {
+      "paper": "https://arxiv.org/abs/2006.00995",
+      "code": "https://github.com/yanaiela/amnesic_probing",
+      "slides": "presentations/Amnesic-Probing-Google.pdf",
+      "video": "https://underline.io/lecture/25845-amnesic-probing-behavioral-explanation-with-amnesic-counterfactuals"
+    }
+  },
+  {
+    "title": "At Your Fingertips: Extracting Piano Fingering Instructions from Videos",
+    "authors": "Amit Moryossef, Yanai Elazar, Yoav Goldberg",
+    "venue": "arxiv",
+    "year": 2020,
+    "bibtex": "/bibtex/piano-fingering.bib",
+    "links": {
+      "paper": "https://arxiv.org/abs/2303.03745",
+      "code": "https://github.com/AmitMY/piano-hands"
+    }
+  },
+  {
+    "title": "It\u2019s not Greek to mBERT: Inducing Word-Level Translations from Multilingual BERT",
+    "authors": "Hila Gonen, Shauli Ravfogel, Yanai Elazar, Yoav Goldberg",
+    "venue": "Third BlackboxNLP Workshop on Analyzing and Interpreting Neural Networks for NLP, at EMNLP 2020",
+    "year": 2020,
+    "bibtex": "/bibtex/mbert-translate.bib",
+    "paperType": "long",
+    "links": {
+      "paper": "https://arxiv.org/abs/2010.08275",
+      "code": "https://github.com/gonenhila/mbert",
+      "slides": "presentations/mbert-poster.pdf",
+      "slidesLabel": "poster"
+    }
+  },
+  {
+    "title": "The Extraordinary Failure of Complement Coercion Crowdsourcing",
+    "authors": "Yanai Elazar, Victoria Basmov, Shauli Ravfogel, Yoav Goldberg, Reut Tsarfaty",
+    "venue": "Workshop on Insights from Negative Results in NLP, EMNLP 2020",
+    "year": 2020,
+    "bibtex": "/bibtex/crowdsourcing-cc.bib",
+    "paperType": "short",
+    "links": {
+      "paper": "https://arxiv.org/abs/2010.05971",
+      "slides": "presentations/crowdsourcing-complement-coercion.pdf",
+      "video": "https://slideslive.com/38940804/the-extraordinary-failure-of-complement-coercion-crowdsourcing"
+    }
+  },
+  {
+    "title": "Do Language Embeddings Capture Scales?",
+    "authors": "Xikun Zhang, Deepak Ramachandran, Ian Tenney, Yanai Elazar, Dan Roth",
+    "venue": "Findings of EMNLP 2020",
+    "year": 2020,
+    "bibtex": "/bibtex/embedding-scales.bib",
+    "paperType": "long",
+    "links": {
+      "paper": "https://arxiv.org/abs/2010.05345",
+      "code": "https://github.com/google-research-datasets/numbert"
+    }
+  },
+  {
+    "title": "Unsupervised Distillation of Syntactic Information from Contextualized Word Representations",
+    "authors": "*Shauli Ravfogel, *Yanai Elazar, Jacob Goldberger, Yoav Goldberg",
+    "venue": "Third BlackboxNLP Workshop on Analyzing and Interpreting Neural Networks for NLP, at EMNLP 2020",
+    "year": 2020,
+    "bibtex": "/bibtex/syntax-distil.bib",
+    "paperType": "long",
+    "links": {
+      "paper": "https://arxiv.org/abs/2010.05265",
+      "code": "https://github.com/shauli-ravfogel/NeuralDecomposition",
+      "slides": "presentations/syntax-distil-cmu.pdf"
+    }
+  },
+  {
+    "title": "Null It Out: Guarding Protected Attributes by Iterative Nullspace Projection",
+    "authors": "Shauli Ravfogel, Yanai Elazar, Hila Gonen, Michael Twiton, Yoav Goldberg",
+    "venue": "ACL 2020",
+    "year": 2020,
+    "bibtex": "/bibtex/null-it-out.bib",
+    "paperType": "long",
+    "links": {
+      "paper": "https://arxiv.org/abs/2004.07667",
+      "code": "https://github.com/shauli-ravfogel/nullspace_projection",
+      "video": "https://slideslive.com/38929453/null-it-out-guarding-protected-attributes-by-iterative-nullspace-projection"
+    }
+  },
+  {
+    "title": "Evaluating Models' Local Decision Boundaries via Contrast Sets",
+    "authors": "Matt Gardner, Yoav Artzi, Victoria Basmova, Jonathan Berant, Ben Bogin, Sihao Chen, Pradeep Dasigi, Dheeru Dua, Yanai Elazar, Ananth Gottumukkala, Nitish Gupta, Hanna Hajishirzi, Gabriel Ilharco, Daniel Khashabi, Kevin Lin, Jiangming Liu, Nelson F Liu, Phoebe Mulcaire, Qiang Ning, Sameer Singh, Noah A Smith, Sanjay Subramanian, Reut Tsarfaty, Eric Wallace, Ally Zhang, Ben Zhou",
+    "venue": "Findings of EMNLP 2020",
+    "year": 2020,
+    "bibtex": "/bibtex/contrast-sets.bib",
+    "paperType": "long",
+    "links": {
+      "paper": "https://arxiv.org/abs/2004.02709",
+      "resource": "https://allennlp.org/contrast-sets"
+    }
+  },
+  {
+    "title": "oLMpics -- On what Language Model Pre-training Captures",
+    "authors": "Alon Talmor, Yanai Elazar, Yoav Goldberg, Jonathan Berant",
+    "venue": "TACL 2020 (presented at EMNLP 2020)",
+    "year": 2020,
+    "bibtex": "/bibtex/olmpics.bib",
+    "paperType": "journal",
+    "links": {
+      "paper": "https://arxiv.org/abs/1912.13283",
+      "code": "https://github.com/alontalmor/oLMpics",
+      "video": "https://slideslive.com/38939400/olmpics-on-what-language-model-pretraining-captures"
+    }
+  },
+  {
+    "title": "Adversarial Removal of Demographic Attributes Revisited",
+    "authors": "Maria Barrett, Yova Kementchedjhieva, Yanai Elazar, Desmond Elliott, Anders S\u00f8gaard",
+    "venue": "EMNLP 2019",
+    "year": 2019,
+    "bibtex": "/bibtex/adv-rem-rev.bib",
+    "paperType": "short",
+    "links": {
+      "paper": "https://www.aclweb.org/anthology/D19-1662.pdf"
+    }
+  },
+  {
+    "title": "How Large Are Lions? Inducing Distributions over Quantitative Attributes",
+    "authors": "Yanai Elazar, Abhijit Mahabal, Deepak Ramachandran, Tania Bedrax-Weiss, Dan Roth",
+    "venue": "ACL 2019",
+    "year": 2019,
+    "bibtex": "/bibtex/doq.bib",
+    "paperType": "long",
+    "links": {
+      "paper": "https://arxiv.org/abs/1906.01327",
+      "code": "https://github.com/google-research-datasets/distribution-over-quantities",
+      "resource": "https://github.com/google-research-datasets/distribution-over-quantities",
+      "demo": "https://nlp.biu.ac.il/~lazary/doq/",
+      "slides": "presentations/doq-iscol.pdf"
+    }
+  },
+  {
+    "title": "Where's My Head? Definition, Dataset and Models for Numeric Fused-Heads Identification and Resolution",
+    "authors": "Yanai Elazar, Yoav Goldberg",
+    "venue": "TACL 2019 (presented at EMNLP 2019)",
+    "year": 2019,
+    "bibtex": "/bibtex/num-fh.bib",
+    "paperType": "journal",
+    "links": {
+      "paper": "https://www.mitpressjournals.org/doi/full/10.1162/tacl_a_00280",
+      "code": "https://github.com/yanaiela/num_fh",
+      "resource": "https://github.com/yanaiela/num_fh/tree/master/data/resolution/processed",
+      "demo": "https://nlp.biu.ac.il/~lazary/fh/",
+      "slides": "presentations/num_fh-emnlp19.pdf",
+      "video": "https://vimeo.com/422211807"
+    }
+  },
+  {
+    "title": "Privacy and Fairness in Recommender Systems via Adversarial Training of User Representations",
+    "authors": "Yehezkel S. Resheff, Yanai Elazar, Moni Shahar, Oren Sar Shalom",
+    "venue": "ICPRAM 2019",
+    "year": 2019,
+    "bibtex": "/bibtex/privacy-recsys.bib",
+    "paperType": "long",
+    "links": {
+      "paper": "https://arxiv.org/abs/1807.03521"
+    }
+  },
+  {
+    "title": "Adversarial Removal of Demographic Attributes from Text Data",
+    "authors": "Yanai Elazar, Yoav Goldberg",
+    "venue": "EMNLP 2018",
+    "year": 2018,
+    "bibtex": "/bibtex/demog-text-removal.bib",
+    "paperType": "long",
+    "links": {
+      "paper": "https://arxiv.org/abs/1808.06640",
+      "code": "https://github.com/yanaiela/demog-text-removal",
+      "slides": "presentations/demog-text-removal-emnlp18.pdf",
+      "video": "https://vimeo.com/305203150"
+    }
+  }
+]
