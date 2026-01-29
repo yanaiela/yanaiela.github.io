@@ -6,7 +6,8 @@
     "year": 2026,
     "bibtex": "/bibtex/llm-generated-reviews.bib",
     "links": {
-      "paper": "https://arxiv.org/abs/2601.17036"
+      "paper": "https://arxiv.org/abs/2601.17036",
+      "code": "https://github.com/yanaiela/llm-review-arxiv"
     }
   },
   {
