@@ -413,6 +413,29 @@
 
       $modal.modal('show');
     });
+
+    // Replace the broken copy handler from academic.min.js.
+    // The original uses addRange() without clearing existing selections first,
+    // which causes subsequent copies to silently fail in most browsers.
+    // Use setTimeout to ensure academic.min.js has already bound its handler,
+    // then unbind it and attach a working one.
+    setTimeout(function () {
+      $('.js-copy-cite').off('click').on('click', function (e) {
+        e.preventDefault();
+        var codeEl = document.querySelector('#modal .modal-body pre code');
+        var text = codeEl ? codeEl.textContent : '';
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text);
+        } else {
+          var range = document.createRange();
+          range.selectNode(codeEl);
+          window.getSelection().removeAllRanges();
+          window.getSelection().addRange(range);
+          try { document.execCommand('copy'); } catch (err) { /* noop */ }
+          window.getSelection().removeAllRanges();
+        }
+      });
+    }, 0);
   }
 
   // Run on DOM ready
