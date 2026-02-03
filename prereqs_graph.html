@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>גרף דרישות קדם - מדעי המחשב</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/dagre@0.8.5/dist/dagre.min.js"></script>
+<script src="https://unpkg.com/cytoscape@3.28.1/dist/cytoscape.min.js"></script>
+<script src="https://unpkg.com/cytoscape-dagre@2.5.0/cytoscape-dagre.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #ffffff;
+    overflow: hidden;
+    height: 100vh;
+    color: #1e293b;
+  }
+
+  /* Toolbar */
+  #toolbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    direction: ltr;
+  }
+  #toolbar h1 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1e293b;
+    white-space: nowrap;
+    letter-spacing: -0.01em;
+  }
+  #stats-badge {
+    font-size: 11px;
+    color: rgba(0,0,0,0.45);
+    white-space: nowrap;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: rgba(0,0,0,0.04);
+    border: 1px solid rgba(0,0,0,0.08);
+    margin-right: 4px;
+  }
+
+  /* Search */
+  .search-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+  }
+  .search-icon {
+    position: absolute;
+    left: 10px;
+    pointer-events: none;
+    color: rgba(0,0,0,0.35);
+    width: 15px;
+    height: 15px;
+  }
+  #search {
+    padding: 6px 10px 6px 32px;
+    border: 1px solid rgba(0,0,0,0.12);
+    border-radius: 8px;
+    font-size: 13px;
+    width: 260px;
+    direction: rtl;
+    font-family: 'Inter', sans-serif;
+    background: rgba(0,0,0,0.04);
+    color: #1e293b;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  #search:focus {
+    border-color: rgba(245,158,11,0.5);
+    box-shadow: 0 0 0 3px rgba(245,158,11,0.12);
+  }
+  #search::placeholder {
+    color: rgba(0,0,0,0.35);
+  }
+  #search-clear {
+    position: absolute;
+    right: 8px;
+    width: 18px;
+    height: 18px;
+    border: none;
+    background: rgba(0,0,0,0.1);
+    border-radius: 50%;
+    color: rgba(0,0,0,0.45);
+    cursor: pointer;
+    font-size: 12px;
+    line-height: 18px;
+    text-align: center;
+    display: none;
+    padding: 0;
+    transition: background 0.15s;
+  }
+  #search-clear:hover { background: rgba(0,0,0,0.18); }
+  #match-count {
+    font-size: 11px;
+    color: #f59e0b;
+    background: rgba(245,158,11,0.12);
+    padding: 2px 8px;
+    border-radius: 999px;
+    white-space: nowrap;
+    display: none;
+    margin-left: 6px;
+    font-weight: 500;
+  }
+
+  /* Buttons */
+  .btn {
+    width: 34px;
+    height: 34px;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 8px;
+    background: rgba(0,0,0,0.04);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(0,0,0,0.5);
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+    flex-shrink: 0;
+  }
+  .btn:hover {
+    background: rgba(0,0,0,0.08);
+    color: #1e293b;
+    border-color: rgba(0,0,0,0.18);
+  }
+  .btn svg { width: 16px; height: 16px; }
+  .btn-divider {
+    width: 1px;
+    height: 20px;
+    background: rgba(0,0,0,0.1);
+    flex-shrink: 0;
+  }
+
+  /* Cytoscape container */
+  #cy {
+    width: 100%;
+    height: 100vh;
+    padding-top: 50px;
+  }
+
+  /* Hover tooltip */
+  #tooltip {
+    position: fixed;
+    display: none;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 13px;
+    direction: rtl;
+    text-align: right;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    max-width: 280px;
+    z-index: 25;
+    pointer-events: none;
+    line-height: 1.5;
+    font-family: 'Inter', sans-serif;
+  }
+  #tooltip .tip-id { color: rgba(0,0,0,0.4); font-size: 12px; font-weight: 500; }
+  #tooltip .tip-name { font-weight: 600; font-size: 14px; color: #1e293b; }
+
+  /* Slide-out detail panel */
+  #detail-panel {
+    position: fixed;
+    top: 0;
+    right: -380px;
+    width: 360px;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-left: 1px solid rgba(0,0,0,0.08);
+    z-index: 15;
+    direction: rtl;
+    padding: 60px 24px 24px;
+    overflow-y: auto;
+    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: -8px 0 32px rgba(0,0,0,0.08);
+  }
+  #detail-panel.open { right: 0; }
+  #detail-panel .panel-close {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: rgba(0,0,0,0.04);
+    color: rgba(0,0,0,0.4);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: background 0.15s, color 0.15s;
+  }
+  #detail-panel .panel-close:hover {
+    background: rgba(0,0,0,0.08);
+    color: #1e293b;
+  }
+  #detail-panel .panel-name {
+    font-size: 20px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+  #detail-panel .panel-id {
+    font-size: 13px;
+    color: rgba(0,0,0,0.4);
+    font-weight: 500;
+    margin-bottom: 20px;
+  }
+  #detail-panel .panel-section-title {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: rgba(0,0,0,0.4);
+    margin-bottom: 8px;
+    margin-top: 20px;
+  }
+  #detail-panel .panel-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  #detail-panel .panel-list li {
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    color: #334155;
+    cursor: pointer;
+    transition: background 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    line-height: 1.4;
+  }
+  #detail-panel .panel-list li:hover {
+    background: rgba(0,0,0,0.05);
+    color: #0f172a;
+  }
+  #detail-panel .panel-list li .list-id {
+    color: rgba(0,0,0,0.35);
+    font-size: 11px;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+  #detail-panel .panel-list .empty-msg {
+    color: rgba(0,0,0,0.3);
+    font-size: 13px;
+    cursor: default;
+    padding: 6px 10px;
+  }
+  #detail-panel .panel-list .empty-msg:hover {
+    background: transparent;
+    color: rgba(0,0,0,0.3);
+  }
+  #detail-panel .panel-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 13px;
+    color: #2563eb;
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 6px;
+    transition: background 0.15s;
+    margin-bottom: 12px;
+  }
+  #detail-panel .panel-link:hover {
+    background: rgba(37,99,235,0.08);
+    text-decoration: underline;
+  }
+  #detail-panel .panel-link svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+  }
+
+  /* Legend */
+  #legend {
+    position: fixed;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 999px;
+    padding: 7px 20px;
+    font-size: 12px;
+    direction: ltr;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    color: rgba(0,0,0,0.55);
+    font-size: 11px;
+    font-weight: 500;
+  }
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+</style>
+</head>
+<body>
+
+<div id="toolbar">
+  <h1>Course Prerequisites Graph</h1>
+  <span id="stats-badge"></span>
+  <div class="search-wrap">
+    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input id="search" type="text" placeholder="חיפוש לפי שם או מספר קורס...">
+    <button id="search-clear" title="Clear">&times;</button>
+  </div>
+  <span id="match-count"></span>
+  <div class="btn-divider"></div>
+  <!-- Zoom In -->
+  <button class="btn" id="zoom-in-btn" title="Zoom In">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+  </button>
+  <!-- Zoom Out -->
+  <button class="btn" id="zoom-out-btn" title="Zoom Out">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+  </button>
+  <div class="btn-divider"></div>
+  <!-- Fit View -->
+  <button class="btn" id="fit-btn" title="Fit View">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+  </button>
+  <!-- Reset -->
+  <button class="btn" id="reset-btn" title="Reset">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+  </button>
+</div>
+
+<div id="cy"></div>
+
+<div id="tooltip"></div>
+
+<div id="detail-panel">
+  <button class="panel-close" title="Close">&times;</button>
+  <div class="panel-name" id="panel-name"></div>
+  <div class="panel-id" id="panel-id"></div>
+  <a class="panel-link" id="panel-link" href="#" target="_blank" style="display:none">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+    <span>עמוד הקורס</span>
+  </a>
+  <div class="panel-section-title" id="prereqs-title">דרישות קדם</div>
+  <ul class="panel-list" id="panel-prereqs"></ul>
+  <div class="panel-section-title" id="dependents-title">קורסים תלויים</div>
+  <ul class="panel-list" id="panel-dependents"></ul>
+</div>
+
+<div id="legend">
+  <div class="legend-item">
+    <div class="legend-dot" style="background: #d1fae5; border: 1.5px solid #6ee7b7;"></div>
+    <span>קורס בסיס</span>
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background: #e0e7ff; border: 1.5px solid #a5b4fc;"></div>
+    <span>קורס עם דרישות קדם</span>
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background: #fef3c7; border: 1.5px solid #fbbf24;"></div>
+    <span>קבוצת שנה</span>
+  </div>
+</div>
+
+<script>
+const DATA = {
+  "89005": { "name": "שעות תכנות", "prerequisites": [] },
+  "89080": { "name": "הכנה למדעי המחשב", "prerequisites": [] },
+  "89081": { "name": "קורס הכנה במתמטיקה", "prerequisites": [] },
+  "89097": { "name": "שעות מחלקה לתלמידי תואר ראשון", "prerequisites": [] },
+  "89098": { "name": "שעות מחלקה לתלמידי תואר ראשון", "prerequisites": [] },
+  "89099": { "name": "שעות מחלקה לתלמידי תואר ראשון", "prerequisites": [] },
+  "89100": { "name": "פרויקט חונכות שנה א'", "prerequisites": [] },
+  "89110": { "name": "מבוא למדעי המחשב", "prerequisites": [] },
+  "891111": { "name": "תכנות מונחה עצמים", "prerequisites": [["89110","מבוא למדעי המחשב"]] },
+  "89112": { "name": "אלגברה ליניארית 1", "prerequisites": [] },
+  "89113": { "name": "אלגברה ליניארית 2", "prerequisites": [["89112","אלגברה ליניארית 1"]] },
+  "89118": { "name": "מבוא לחדו\"א 1", "prerequisites": [] },
+  "89119": { "name": "מבוא לאלגברה לינארית", "prerequisites": [] },
+  "891195": { "name": "מתמטיקה בדידה", "prerequisites": [] },
+  "891200": { "name": "מבני נתונים", "prerequisites": [["89132","חשבון אינפיניטסימלי 1"],["89112","אלגברה ליניארית 1"],["891262","הסתברות כללית למדעי המחשב"],["89110","מבוא למדעי המחשב"],["891195","מתמטיקה בדידה"]] },
+  "891262": { "name": "הסתברות כללית למדעי המחשב", "prerequisites": [["89132","חשבון אינפיניטסימלי 1"],["89112","אלגברה ליניארית 1"],["89110","מבוא למדעי המחשב"],["891195","מתמטיקה בדידה"]] },
+  "89132": { "name": "חשבון אינפיניטסימלי 1", "prerequisites": [] },
+  "89133": { "name": "חשבון אינפיניטסימלי 2", "prerequisites": [["89132","חשבון אינפיניטסימלי 1"]] },
+  "89200": { "name": "לוגיקה מתמטית", "prerequisites": [] },
+  "89213": { "name": "מודלים חישוביים", "prerequisites": [["891195","מתמטיקה בדידה"],["89110","מבוא למדעי המחשב"]] },
+  "89214": { "name": "מבנים אלגבריים", "prerequisites": [] },
+  "89218": { "name": "מבוא לחדו\"א 2", "prerequisites": [["89118","מבוא לחדו\"א 1"]] },
+  "year1_all": { "name": "כל קורסי שנה א'", "prerequisites": [["89110","מבוא למדעי המחשב"],["891111","תכנות מונחה עצמים"],["89112","אלגברה ליניארית 1"],["89113","אלגברה ליניארית 2"],["89132","חשבון אינפיניטסימלי 1"],["89133","חשבון אינפיניטסימלי 2"],["891195","מתמטיקה בדידה"],["891200","מבני נתונים"],["891262","הסתברות כללית למדעי המחשב"]] },
+  "892197": { "name": "מבנים בדידים", "prerequisites": [["year1_all","כל קורסי שנה א'"]] },
+  "89220": { "name": "אלגוריתמים 1", "prerequisites": [["year1_all","כל קורסי שנה א'"]] },
+  "892226": { "name": "חישוביות וסיבוכיות", "prerequisites": [["89213","מודלים חישוביים"],["89220","אלגוריתמים 1"]] },
+  "89230": { "name": "מבנה מחשב", "prerequisites": [["year1_all","כל קורסי שנה א'"]] },
+  "89231": { "name": "מערכות הפעלה", "prerequisites": [["year1_all","כל קורסי שנה א'"],["89230","מבנה מחשב"]] },
+  "892322": { "name": "אלגוריתמים מתקדמים", "prerequisites": [["year1_all","כל קורסי שנה א'"],["89220","אלגוריתמים 1"],["892226","חישוביות וסיבוכיות"]] },
+  "892511": { "name": "למידת מכונה", "prerequisites": [["year1_all","כל קורסי שנה א'"],["89220","אלגוריתמים 1"],["89263","שיטות סטטיסטיות במדעי המחשב"]] },
+  "89256": { "name": "תורת המספרים", "prerequisites": [["89113","אלגברה ליניארית 2"],["891195","מתמטיקה בדידה"]] },
+  "89263": { "name": "שיטות סטטיסטיות במדעי המחשב", "prerequisites": [["year1_all","כל קורסי שנה א'"]] },
+  "89264": { "name": "ביוסטטיסטיקה", "prerequisites": [] },
+  "893000": { "name": "קוד מבחן תיזה לתואר שני - החל מתש\"פ", "prerequisites": [] },
+  "893210": { "name": "תכנות מערכות מתקדם", "prerequisites": [["year1_all","כל קורסי שנה א'"]] },
+  "893226": { "name": "סדנה מעשית באינטראקציית אדם-רובוט (HRI)", "prerequisites": [] },
+  "893311": { "name": "עקרונות שפות תכנות", "prerequisites": [["year1_all","כל קורסי שנה א'"],["89213","מודלים חישוביים"]] },
+  "893312": { "name": "תכנות מערכות מקביליות", "prerequisites": [] },
+  "893592": { "name": "יסודות בממשק משתמש", "prerequisites": [] },
+  "89374": { "name": "סדנה לפרויקטים מצטיינים", "prerequisites": [] },
+  "89383": { "name": "סדנה לפרויקטים", "prerequisites": [] },
+  "89384": { "name": "סדנה לפרויקטים", "prerequisites": [] },
+  "89385": { "name": "סדנה לפרויקטים", "prerequisites": [] },
+  "89386": { "name": "סדנה לפרויקטים", "prerequisites": [["year1_all","כל קורסי שנה א'"],["893210","תכנות מערכות מתקדם"],["89230","מבנה מחשב"],["89231","מערכות הפעלה"]] },
+  "89387": { "name": "סדנה לפרויקטים", "prerequisites": [["year1_all","כל קורסי שנה א'"],["893210","תכנות מערכות מתקדם"],["89230","מבנה מחשב"],["89231","מערכות הפעלה"]] },
+  "89390": { "name": "חזית המחקר במדעי המחשב", "prerequisites": [] },
+  "894000": { "name": "סמינר באימות חוזים חכמים בבלוקצ׳יין", "prerequisites": [["89110","מבוא למדעי המחשב"],["892226","חישוביות וסיבוכיות"]] }
+};
+
+const LID_MAP = {
+  "89005":"777481","89080":"780477","89081":"775786","89097":"784388",
+  "89098":"784387","89099":"777479","89100":"780034","89110":"777477",
+  "891111":"773486","89112":"777467","89113":"777462","89118":"777459",
+  "89119":"774120","891195":"781594","891200":"781586","891262":"781589",
+  "89132":"777446","89133":"777439","89200":"777423","89213":"781613",
+  "89214":"777420","89218":"777414","892197":"775296","89220":"781571",
+  "892226":"775082","89230":"777404","89231":"777397","892322":"775288",
+  "892511":"775294","89256":"777492","89263":"780867","89264":"783355",
+  "893000":"776237","893210":"775034","893226":"772770","893311":"775057",
+  "893312":"775036","893592":"772406","89374":"787572","89383":"786753",
+  "89384":"786752","89385":"777412","89386":"786078","89387":"786079",
+  "89390":"772499","894000":"781558"
+};
+
+function formatId(id) {
+  if (id.length === 5) return id.slice(0, 2) + '-' + id.slice(2);
+  if (id.length === 6) return id.slice(0, 2) + '-' + id.slice(2, 3) + id.slice(3);
+  return id;
+}
+
+// Build elements
+const nodes = [];
+const edges = [];
+const knownIds = new Set(Object.keys(DATA));
+const phantomIds = new Set();
+
+// Collect phantom prerequisite IDs
+for (const [courseId, course] of Object.entries(DATA)) {
+  for (const [prereqId] of course.prerequisites) {
+    if (!knownIds.has(prereqId)) {
+      phantomIds.add(prereqId);
+    }
+  }
+}
+
+// Add real nodes
+for (const [id, course] of Object.entries(DATA)) {
+  const hasPrereqs = course.prerequisites.length > 0;
+  const isGroup = id.startsWith('year');
+  nodes.push({
+    data: {
+      id: id,
+      label: isGroup ? course.name : course.name + '\n' + formatId(id),
+      name: course.name,
+      type: isGroup ? 'group' : (hasPrereqs ? 'dependent' : 'root'),
+      prereqList: course.prerequisites
+    }
+  });
+}
+
+// Add phantom nodes
+for (const id of phantomIds) {
+  nodes.push({
+    data: {
+      id: id,
+      label: formatId(id) + '\n(לא במערכת)',
+      name: '(לא במערכת)',
+      type: 'phantom',
+      prereqList: []
+    }
+  });
+}
+
+// Add edges: prerequisite -> dependent course
+for (const [courseId, course] of Object.entries(DATA)) {
+  for (const [prereqId] of course.prerequisites) {
+    edges.push({
+      data: {
+        id: 'e-' + prereqId + '-' + courseId,
+        source: prereqId,
+        target: courseId
+      }
+    });
+  }
+}
+
+// Stats badge
+const courseCount = Object.keys(DATA).length;
+const depCount = edges.length;
+document.getElementById('stats-badge').textContent = courseCount + ' courses \u00b7 ' + depCount + ' dependencies';
+
+// Init Cytoscape
+const cy = cytoscape({
+  container: document.getElementById('cy'),
+  elements: { nodes, edges },
+  style: [
+    {
+      selector: 'node',
+      style: {
+        'text-valign': 'center',
+        'text-halign': 'center',
+        'text-wrap': 'wrap',
+        'text-max-width': '140px',
+        'font-size': '11px',
+        'font-family': 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
+        'width': 'label',
+        'height': 'label',
+        'padding': '14px',
+        'shape': 'roundrectangle',
+        'transition-property': 'border-width, border-color, opacity, overlay-opacity',
+        'transition-duration': '0.15s'
+      }
+    },
+    {
+      selector: 'node[type="root"]',
+      style: {
+        'background-color': '#ecfdf5',
+        'background-fill': 'linear-gradient',
+        'background-gradient-stop-colors': '#ecfdf5 #d1fae5',
+        'background-gradient-direction': 'to-bottom-right',
+        'color': '#065f46',
+        'label': 'data(label)',
+        'border-width': 2,
+        'border-color': '#6ee7b7'
+      }
+    },
+    {
+      selector: 'node[type="dependent"]',
+      style: {
+        'background-color': '#eef2ff',
+        'background-fill': 'linear-gradient',
+        'background-gradient-stop-colors': '#eef2ff #e0e7ff',
+        'background-gradient-direction': 'to-bottom-right',
+        'color': '#3730a3',
+        'label': 'data(label)',
+        'border-width': 2,
+        'border-color': '#a5b4fc'
+      }
+    },
+    {
+      selector: 'node[type="phantom"]',
+      style: {
+        'background-color': '#f8fafc',
+        'color': '#64748b',
+        'label': 'data(label)',
+        'text-max-width': '120px',
+        'font-size': '10px',
+        'padding': '10px',
+        'border-width': 2,
+        'border-color': '#cbd5e1',
+        'border-style': 'dashed'
+      }
+    },
+    {
+      selector: 'node[type="group"]',
+      style: {
+        'background-color': '#fffbeb',
+        'background-fill': 'linear-gradient',
+        'background-gradient-stop-colors': '#fffbeb #fef3c7',
+        'background-gradient-direction': 'to-bottom-right',
+        'color': '#92400e',
+        'label': 'data(label)',
+        'font-size': '12px',
+        'font-weight': 'bold',
+        'border-width': 2.5,
+        'border-color': '#fbbf24',
+        'shape': 'roundrectangle',
+        'padding': '16px',
+        'text-max-width': '160px'
+      }
+    },
+    {
+      selector: 'edge',
+      style: {
+        'width': 1.5,
+        'line-color': 'rgba(0,0,0,0.18)',
+        'target-arrow-color': 'rgba(0,0,0,0.18)',
+        'target-arrow-shape': 'triangle',
+        'curve-style': 'bezier',
+        'arrow-scale': 1.1,
+        'transition-property': 'line-color, target-arrow-color, width, opacity',
+        'transition-duration': '0.15s'
+      }
+    },
+    {
+      selector: '.highlighted',
+      style: {
+        'border-width': 3,
+        'border-color': '#f59e0b',
+        'overlay-color': '#f59e0b',
+        'overlay-padding': 4,
+        'overlay-opacity': 0.08,
+        'z-index': 10
+      }
+    },
+    {
+      selector: 'edge.highlighted',
+      style: {
+        'line-color': '#f59e0b',
+        'target-arrow-color': '#f59e0b',
+        'width': 2.5,
+        'z-index': 10
+      }
+    },
+    {
+      selector: '.faded',
+      style: {
+        'opacity': 0.08
+      }
+    },
+    {
+      selector: '.search-match',
+      style: {
+        'border-width': 3,
+        'border-color': '#f59e0b',
+        'overlay-color': '#f59e0b',
+        'overlay-padding': 4,
+        'overlay-opacity': 0.1,
+        'z-index': 10
+      }
+    }
+  ],
+  layout: {
+    name: 'dagre',
+    rankDir: 'TB',
+    nodeSep: 40,
+    rankSep: 80,
+    edgeSep: 20,
+    padding: 30
+  },
+  minZoom: 0.2,
+  maxZoom: 3,
+  wheelSensitivity: 0.3
+});
+
+// Hover tooltip (simplified: name + ID only)
+const tooltip = document.getElementById('tooltip');
+
+cy.on('mouseover', 'node', function(e) {
+  const node = e.target;
+  const d = node.data();
+  tooltip.innerHTML = '<div class="tip-name">' + d.name + '</div><div class="tip-id">' + formatId(d.id) + '</div>';
+  tooltip.style.display = 'block';
+});
+
+cy.on('mousemove', 'node', function(e) {
+  const x = e.originalEvent.clientX;
+  const y = e.originalEvent.clientY;
+  const tw = tooltip.offsetWidth;
+  const th = tooltip.offsetHeight;
+  const ww = window.innerWidth;
+  const wh = window.innerHeight;
+  let left = x + 15;
+  let top = y + 15;
+  if (left + tw > ww - 10) left = x - tw - 15;
+  if (top + th > wh - 10) top = y - th - 15;
+  tooltip.style.left = left + 'px';
+  tooltip.style.top = top + 'px';
+});
+
+cy.on('mouseout', 'node', function() {
+  tooltip.style.display = 'none';
+});
+
+// Dependency chain traversal
+function getAncestors(node, collected) {
+  collected = collected || cy.collection();
+  const incomers = node.incomers();
+  const newNodes = incomers.nodes().difference(collected);
+  collected = collected.union(incomers);
+  newNodes.forEach(function(n) {
+    collected = collected.union(getAncestors(n, collected));
+  });
+  return collected;
+}
+
+function getDescendants(node, collected) {
+  collected = collected || cy.collection();
+  const outgoers = node.outgoers();
+  const newNodes = outgoers.nodes().difference(collected);
+  collected = collected.union(outgoers);
+  newNodes.forEach(function(n) {
+    collected = collected.union(getDescendants(n, collected));
+  });
+  return collected;
+}
+
+// Detail panel
+const detailPanel = document.getElementById('detail-panel');
+const panelName = document.getElementById('panel-name');
+const panelId = document.getElementById('panel-id');
+const panelPrereqs = document.getElementById('panel-prereqs');
+const panelDependents = document.getElementById('panel-dependents');
+
+const panelLink = document.getElementById('panel-link');
+
+function openPanel(nodeData) {
+  panelName.textContent = nodeData.name;
+  panelId.textContent = formatId(nodeData.id);
+
+  // Course URL
+  const lid = LID_MAP[nodeData.id];
+  if (lid) {
+    panelLink.href = 'https://courses.biu.ac.il/CourseSylabusView.aspx?lid=' + lid;
+    panelLink.style.display = 'inline-flex';
+  } else {
+    panelLink.style.display = 'none';
+  }
+
+  // Prerequisites
+  panelPrereqs.innerHTML = '';
+  if (nodeData.prereqList && nodeData.prereqList.length > 0) {
+    for (const [pid, pname] of nodeData.prereqList) {
+      const li = document.createElement('li');
+      const nameSpan = document.createElement('span');
+      nameSpan.textContent = pname || '(לא במערכת)';
+      const idSpan = document.createElement('span');
+      idSpan.className = 'list-id';
+      idSpan.textContent = formatId(pid);
+      li.appendChild(nameSpan);
+      li.appendChild(idSpan);
+      li.addEventListener('click', function() { navigateToNode(pid); });
+      panelPrereqs.appendChild(li);
+    }
+  } else {
+    const li = document.createElement('li');
+    li.className = 'empty-msg';
+    li.textContent = nodeData.type === 'phantom' ? 'לא זמין' : 'ללא דרישות קדם';
+    panelPrereqs.appendChild(li);
+  }
+
+  // Dependents (courses that require this node)
+  panelDependents.innerHTML = '';
+  const dependents = [];
+  for (const [courseId, course] of Object.entries(DATA)) {
+    for (const [prereqId] of course.prerequisites) {
+      if (prereqId === nodeData.id) {
+        dependents.push({ id: courseId, name: course.name });
+        break;
+      }
+    }
+  }
+  if (dependents.length > 0) {
+    for (const dep of dependents) {
+      const li = document.createElement('li');
+      const nameSpan = document.createElement('span');
+      nameSpan.textContent = dep.name;
+      const idSpan = document.createElement('span');
+      idSpan.className = 'list-id';
+      idSpan.textContent = formatId(dep.id);
+      li.appendChild(nameSpan);
+      li.appendChild(idSpan);
+      li.addEventListener('click', function() { navigateToNode(dep.id); });
+      panelDependents.appendChild(li);
+    }
+  } else {
+    const li = document.createElement('li');
+    li.className = 'empty-msg';
+    li.textContent = 'אין קורסים תלויים';
+    panelDependents.appendChild(li);
+  }
+
+  detailPanel.classList.add('open');
+}
+
+function closePanel() {
+  detailPanel.classList.remove('open');
+}
+
+function navigateToNode(nodeId) {
+  const node = cy.getElementById(nodeId);
+  if (node.length === 0) return;
+
+  cy.elements().removeClass('highlighted faded');
+  const chain = node.union(getAncestors(node)).union(getDescendants(node));
+  chain.addClass('highlighted');
+  cy.elements().difference(chain).addClass('faded');
+
+  cy.animate({
+    center: { eles: node },
+    zoom: cy.zoom()
+  }, { duration: 300 });
+
+  openPanel(node.data());
+}
+
+detailPanel.querySelector('.panel-close').addEventListener('click', function() {
+  closePanel();
+});
+
+// Click node: highlight dependency chain + open panel
+cy.on('tap', 'node', function(e) {
+  const node = e.target;
+  cy.elements().removeClass('highlighted faded');
+
+  const chain = node.union(getAncestors(node)).union(getDescendants(node));
+  chain.addClass('highlighted');
+  cy.elements().difference(chain).addClass('faded');
+
+  openPanel(node.data());
+});
+
+// Click background: reset
+cy.on('tap', function(e) {
+  if (e.target === cy) {
+    cy.elements().removeClass('highlighted faded search-match');
+    closePanel();
+  }
+});
+
+// Zoom buttons
+document.getElementById('zoom-in-btn').addEventListener('click', function() {
+  cy.zoom({ level: cy.zoom() * 1.3, renderedPosition: { x: cy.width() / 2, y: cy.height() / 2 } });
+});
+document.getElementById('zoom-out-btn').addEventListener('click', function() {
+  cy.zoom({ level: cy.zoom() / 1.3, renderedPosition: { x: cy.width() / 2, y: cy.height() / 2 } });
+});
+
+// Fit button
+document.getElementById('fit-btn').addEventListener('click', function() {
+  cy.fit(undefined, 30);
+});
+
+// Reset button
+document.getElementById('reset-btn').addEventListener('click', function() {
+  cy.elements().removeClass('highlighted faded search-match');
+  closePanel();
+  cy.fit(undefined, 30);
+});
+
+// Search
+const searchInput = document.getElementById('search');
+const searchClear = document.getElementById('search-clear');
+const matchCount = document.getElementById('match-count');
+
+function doSearch() {
+  const q = searchInput.value.trim();
+  cy.elements().removeClass('search-match faded');
+
+  if (!q) {
+    searchClear.style.display = 'none';
+    matchCount.style.display = 'none';
+    return;
+  }
+
+  searchClear.style.display = 'block';
+
+  const matched = cy.nodes().filter(function(n) {
+    const d = n.data();
+    return d.id.includes(q) || d.name.includes(q) || formatId(d.id).includes(q);
+  });
+
+  if (matched.length > 0) {
+    matched.addClass('search-match');
+    cy.elements().difference(matched).addClass('faded');
+    matchCount.textContent = matched.length + ' results';
+    matchCount.style.display = 'inline';
+  } else {
+    matchCount.textContent = 'No results';
+    matchCount.style.display = 'inline';
+  }
+}
+
+searchInput.addEventListener('input', doSearch);
+
+searchClear.addEventListener('click', function() {
+  searchInput.value = '';
+  doSearch();
+  searchInput.focus();
+});
+
+// Keyboard shortcuts
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    cy.elements().removeClass('highlighted faded search-match');
+    closePanel();
+    searchInput.value = '';
+    searchClear.style.display = 'none';
+    matchCount.style.display = 'none';
+  }
+  if (e.key === '/' && document.activeElement !== searchInput) {
+    e.preventDefault();
+    searchInput.focus();
+  }
+});
+</script>
+</body>
+</html>
