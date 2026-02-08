@@ -63,6 +63,51 @@
   <link href="css/scrolling-nav.css" rel="stylesheet">
   <link href="css/timeline.css" rel="stylesheet">
 
+  <style>
+    .pub-card {
+        background: #fff;
+        border-radius: 6px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        border-left: 4px solid #0069d9;
+        padding: 0.75rem 1rem;
+        margin-bottom: 0.6rem;
+        transition: box-shadow 0.2s ease, transform 0.2s ease;
+    }
+    .pub-card:hover {
+        box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        transform: translateY(-2px);
+    }
+    .pub-title {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 500;
+        font-size: 1.1rem;
+        color: #0069d9;
+        text-decoration: none;
+        line-height: 1.4;
+    }
+    .pub-title:hover {
+        text-decoration: underline;
+    }
+    .pub-authors {
+        color: #666;
+        font-size: 0.92rem;
+        margin-top: 0.3rem;
+    }
+    .pub-venue {
+        color: #555;
+        font-size: 0.92rem;
+        margin-top: 0.2rem;
+    }
+    .pub-badge {
+        display: inline;
+    }
+    @media (max-width: 768px) {
+        .pub-card {
+            padding: 1rem;
+        }
+    }
+  </style>
+
 </head>
 
 <body id="page-top">
@@ -317,66 +362,65 @@
 
           <p class="text-muted mb-4">For a full list of my publications, see <a href="publications.html">this page</a>, or my <a href="https://scholar.google.com/citations?user=7p_Ce8kAAAAJ">Google Scholar profile</a>.</p>
 
-          <p>
-            <a href="https://arxiv.org/abs/2410.15002">How Many Images Does It Take? Estimating Imitation Thresholds in Text-to-Image Models</a><br/>
-            Verma et al.,
-            TMLR 2025<br/>
-          </p>
+          <div class="pub-card">
+            <a class="pub-title" href="https://arxiv.org/abs/2410.15002">How Many Images Does It Take? Estimating Imitation Thresholds in Text-to-Image Models</a>
+            <div class="pub-authors">Verma et al.</div>
+            <div class="pub-venue">TMLR 2025</div>
+          </div>
 
-          <p>
-            <a href="https://arxiv.org/abs/2504.07096">OLMoTrace: Tracing Language Model Outputs Back to Trillions of Training Tokens</a><br/>
-            Liu et al.,
-            Best Demo Award 🏆 @ ACL system demonstrations 2025<br/>
-        </p>
+          <div class="pub-card">
+            <a class="pub-title" href="https://arxiv.org/abs/2504.07096">OLMoTrace: Tracing Language Model Outputs Back to Trillions of Training Tokens</a>
+            <div class="pub-authors">Liu et al.</div>
+            <div class="pub-venue">ACL System Demonstrations 2025 <span class="pub-badge">Best Demo 🏆</span></div>
+          </div>
 
-          <p>
-            <a href="https://openreview.net/pdf?id=EDoD3DgivF">On Linear Representations and Pretraining Data Frequency in Language Models</a><br/>
-            Merullo et al.,
-            ICLR 2025<br/>
-            
-        </p>
+          <div class="pub-card">
+            <a class="pub-title" href="https://openreview.net/pdf?id=EDoD3DgivF">On Linear Representations and Pretraining Data Frequency in Language Models</a>
+            <div class="pub-authors">Merullo et al.</div>
+            <div class="pub-venue">ICLR 2025</div>
+          </div>
 
-          <p>
-            <a href="https://arxiv.org/abs/2406.13069">Evaluating \( n \)-Gram Novelty of Language Models Using Rusty-DAWG</a>,<br/>
-            Merrill et al.,
-            EMNLP 2024<br/>
-         </p>
+          <div class="pub-card">
+            <a class="pub-title" href="https://arxiv.org/abs/2406.13069">Evaluating \( n \)-Gram Novelty of Language Models Using Rusty-DAWG</a>
+            <div class="pub-authors">Merrill et al.</div>
+            <div class="pub-venue">EMNLP 2024</div>
+          </div>
 
-          <p>
-            <a href="https://arxiv.org/abs/2407.00211">Detection and Measurement of Syntactic Templates in Generated Text</a><br/>
-            Shaib et al.,
-            EMNLP 2024<br/>
-         </p>
+          <div class="pub-card">
+            <a class="pub-title" href="https://arxiv.org/abs/2407.00211">Detection and Measurement of Syntactic Templates in Generated Text</a>
+            <div class="pub-authors">Shaib et al.</div>
+            <div class="pub-venue">EMNLP 2024</div>
+          </div>
 
-          <p>
-            <a href="https://arxiv.org/abs/2308.00755">The Bias Amplification Paradox in Text-to-Image Generation</a><br/>
-            Seshadri et al.,
-            NAACL 2024<br/>
-         </p>
+          <div class="pub-card">
+            <a class="pub-title" href="https://arxiv.org/abs/2308.00755">The Bias Amplification Paradox in Text-to-Image Generation</a>
+            <div class="pub-authors">Seshadri et al.</div>
+            <div class="pub-venue">NAACL 2024</div>
+          </div>
 
-          <p>
-            <a href="https://arxiv.org/abs/2310.20707">What's In My Big Data?</a><br/>
-            Elazar et al.,
-            ICLR 2024 spotlight<br/>
-         </p>
+          <div class="pub-card">
+            <a class="pub-title" href="https://arxiv.org/abs/2310.20707">What's In My Big Data?</a>
+            <div class="pub-authors">Elazar et al.</div>
+            <div class="pub-venue">ICLR 2024 <span class="pub-badge">Spotlight</span></div>
+          </div>
 
-         <p>
-            <a href="https://arxiv.org/abs/2306.13891">Estimating the Causal Effect of Early ArXiving on Paper Acceptance</a>,<br/>
-            *Elazar and *Zhang and *Wadden, et al.,
-            CLeaR 2024<br/>
-         </p>
+          <div class="pub-card">
+            <a class="pub-title" href="https://arxiv.org/abs/2306.13891">Estimating the Causal Effect of Early ArXiving on Paper Acceptance</a>
+            <div class="pub-authors">*Elazar and *Zhang and *Wadden, et al.</div>
+            <div class="pub-venue">CLeaR 2024</div>
+          </div>
 
-          <p>
-            <a href="https://arxiv.org/abs/2102.01017">Measuring and Improving Consistency in Pretrained Language Models</a><br/>
-            Elazar et al.,
-            TACL 2021<br/>
-          </p>
+          <div class="pub-card">
+            <a class="pub-title" href="https://arxiv.org/abs/2102.01017">Measuring and Improving Consistency in Pretrained Language Models</a>
+            <div class="pub-authors">Elazar et al.</div>
+            <div class="pub-venue">TACL 2021</div>
+          </div>
 
-          <p>
-            <a href="https://arxiv.org/abs/2006.00995">Amnesic Probing: Behavioral Explanation with Amnesic Counterfactuals</a><br/>
-            Elazar et al.,
-            TACL 2021<br/>
-          </p>
+          <div class="pub-card">
+            <a class="pub-title" href="https://arxiv.org/abs/2006.00995">Amnesic Probing: Behavioral Explanation with Amnesic Counterfactuals</a>
+            <div class="pub-authors">Elazar et al.</div>
+            <div class="pub-venue">TACL 2021</div>
+          </div>
 
         </div>
       </div>
