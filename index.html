@@ -101,8 +101,37 @@
     .pub-badge {
         display: inline;
     }
+    .post-card {
+        background: #fff;
+        border-radius: 6px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        border-left: 4px solid #e67e22;
+        padding: 0.75rem 1rem;
+        margin-bottom: 0.6rem;
+        transition: box-shadow 0.2s ease, transform 0.2s ease;
+    }
+    .post-card:hover {
+        box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        transform: translateY(-2px);
+    }
+    .post-title {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 500;
+        font-size: 1.1rem;
+        color: black;
+        text-decoration: none;
+        line-height: 1.4;
+    }
+    .post-title:hover {
+        text-decoration: underline;
+    }
+    .post-description {
+        color: #666;
+        font-size: 0.92rem;
+        margin-top: 0.2rem;
+    }
     @media (max-width: 768px) {
-        .pub-card {
+        .pub-card, .post-card {
             padding: 1rem;
         }
     }
@@ -436,17 +465,25 @@
         <div class="col-lg-8 mx-auto">
           <h2>Posts</h2>
 
-          <h4 style="color:black;"><a href="posts/meta-reviews-for-arr.html">Meta-Reviewing for ACL-ARR (EMNLP)</a></h4>
-          <p>My experience from meta-reviewing for ARR, and on some reviewer's fallacies</p>
+          <div class="post-card">
+            <a class="post-title" href="posts/meta-reviews-for-arr.html">Meta-Reviewing for ACL-ARR (EMNLP)</a>
+            <div class="post-description">My experience from meta-reviewing for ARR, and on some reviewer's fallacies</div>
+          </div>
 
-          <h4 style="color:black;"><a href="https://medium.com/ai2-blog/from-interviewee-to-interviewer-68c36593b305">From Interviewee To Interviewer</a></h4>
-          <p>Behind the scences of the interviewing process</p>
+          <div class="post-card">
+            <a class="post-title" href="https://medium.com/ai2-blog/from-interviewee-to-interviewer-68c36593b305">From Interviewee To Interviewer</a>
+            <div class="post-description">Behind the scences of the interviewing process</div>
+          </div>
 
-          <h4 style="color:black;"><a href="posts/attending-acl2020.html">Attending ACL 2020</a></h4>
-          <p>My strategy for attending my first virtual conference.</p>
+          <div class="post-card">
+            <a class="post-title" href="posts/attending-acl2020.html">Attending ACL 2020</a>
+            <div class="post-description">My strategy for attending my first virtual conference.</div>
+          </div>
 
-          <h4 style="color:black;"><a href="posts/remote-servers.html">Remote Servers</a></h4>
-          <p>How to setup your environment to seemingly work with remote servers.</p>
+          <div class="post-card">
+            <a class="post-title" href="posts/remote-servers.html">Remote Servers</a>
+            <div class="post-description">How to setup your environment to seemingly work with remote servers.</div>
+          </div>
         </div>
       </div>
     </div>
