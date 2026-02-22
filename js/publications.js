@@ -411,7 +411,7 @@
           $errorEl.html('<div class="alert alert-danger">Could not load citation file.</div>');
         });
 
-      $modal.modal('show');
+      bootstrap.Modal.getOrCreateInstance($modal[0]).show();
     });
 
     $('.js-copy-cite').on('click', function (e) {
