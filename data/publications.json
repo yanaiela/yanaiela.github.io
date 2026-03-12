@@ -30,6 +30,7 @@
     "venue": "TACL 2026",
     "year": 2026,
     "bibtex": "/bibtex/rewriting-history.bib",
+    "paperType": "journal",
     "links": {
       "paper": "https://arxiv.org/abs/2510.14261",
       "code": "https://github.com/rahuln/pretrain-intervention"
