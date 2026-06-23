@@ -1,5 +1,15 @@
 [
   {
+    "title": "Benchmarking Agentic Review Systems",
+    "authors": "Dang Nguyen, Wanqing Hao, Yanai Elazar, Chenhao Tan",
+    "venue": "arxiv",
+    "year": 2026,
+    "bibtex": "/bibtex/agentic-review-systems.bib",
+    "links": {
+      "paper": "https://arxiv.org/abs/2606.19749"
+    }
+  },
+  {
     "title": "LLM-Generated or Human-Written? Comparing Review and Non-Review Papers on ArXiv",
     "authors": "Yanai Elazar, Maria Antoniak",
     "venue": "arxiv",
