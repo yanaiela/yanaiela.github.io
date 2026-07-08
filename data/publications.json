@@ -6,7 +6,8 @@
     "year": 2026,
     "bibtex": "/bibtex/mance.bib",
     "links": {
-      "paper": "https://arxiv.org/abs/2607.03973"
+      "paper": "https://arxiv.org/abs/2607.03973",
+      "code": "https://github.com/MatanAvitan/mance"
     }
   },
   {
