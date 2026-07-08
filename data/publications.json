@@ -1,5 +1,15 @@
 [
   {
+    "title": "MANCE: Manifold Aware Concept Erasure",
+    "authors": "Matan Avitan, Yoav Goldberg, Yanai Elazar",
+    "venue": "arxiv",
+    "year": 2026,
+    "bibtex": "/bibtex/mance.bib",
+    "links": {
+      "paper": "https://arxiv.org/abs/2607.03973"
+    }
+  },
+  {
     "title": "Benchmarking Agentic Review Systems",
     "authors": "Dang Nguyen, Wanqing Hao, Yanai Elazar, Chenhao Tan",
     "venue": "arxiv",
