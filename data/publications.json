@@ -23,7 +23,7 @@
   {
     "title": "LLM-Generated or Human-Written? Comparing Review and Non-Review Papers on ArXiv",
     "authors": "Yanai Elazar, Maria Antoniak",
-    "venue": "arxiv",
+    "venue": "Findings of EMNLP 2026",
     "year": 2026,
     "bibtex": "/bibtex/llm-generated-reviews.bib",
     "links": {
@@ -145,10 +145,10 @@
     }
   },
   {
-    "title": "GRADE: Quantifying Sample Diversity in Text-to-Image Models",
+    "title": "Quantifying and Mitigating Default Behaviors in Text-to-Image Models",
     "authors": "Royi Rassin, Aviv Slobodkin, Shauli Ravfogel, Yanai Elazar, Yoav Goldberg",
-    "venue": "arxiv",
-    "year": 2024,
+    "venue": "Findings of EMNLP 2026",
+    "year": 2026,
     "bibtex": "/bibtex/grade.bib",
     "links": {
       "paper": "https://arxiv.org/abs/2410.22592",
