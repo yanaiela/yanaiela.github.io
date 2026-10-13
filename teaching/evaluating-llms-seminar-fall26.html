@@ -1,0 +1,622 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Evaluating LLMs Seminar — Fall 2026</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F4EFE6;
+    --paper-2: #EBE4D6;
+    --card: #FBF8F2;
+    --ink: #1E1C19;
+    --ink-2: #4A4640;
+    --muted: #8A8378;
+    --rule: #CFC6B5;
+    --accent: #9E2B25;
+    --serif: "Newsreader", "Iowan Old Style", Georgia, "Times New Roman", serif;
+    --sans: "Source Sans 3", "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+  }
+  html, body, .reveal-viewport { background: var(--paper); }
+  .reveal { font-family: var(--sans); font-size: 27px; color: var(--ink); }
+  .reveal .slides { text-align: left; }
+  .reveal .slides section { height: 100%; box-sizing: border-box; padding: 0; }
+  .reveal a { color: var(--accent); text-decoration: none; border-bottom: 1px solid currentColor; }
+  .reveal b, .reveal strong { font-weight: 600; color: var(--ink); }
+  .reveal p { margin: 0; }
+
+  /* ---------- content slide frame ---------- */
+  .reveal section.c { padding: 62px 84px 70px; }
+  .kicker { font: 600 15px/1 var(--sans); letter-spacing: .22em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+  .reveal section.c > h2 {
+    font: 500 54px/1.08 var(--serif); letter-spacing: -.01em; color: var(--ink);
+    margin: 0 0 22px; padding-bottom: 20px; border-bottom: 1px solid var(--ink); text-transform: none;
+  }
+  .reveal section.c > h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
+  .folio { position: absolute; left: 84px; right: 84px; bottom: 30px; display: flex; justify-content: space-between;
+    font: 400 14px/1 var(--sans); letter-spacing: .08em; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 12px; }
+  .folio i { font-family: var(--serif); letter-spacing: 0; font-size: 16px; }
+
+  /* ---------- lists ---------- */
+  .reveal ul { list-style: none; margin: 0; padding: 0; }
+  .reveal ul > li { position: relative; padding-left: 30px; margin: 0 0 15px; line-height: 1.38; color: var(--ink-2); }
+  .reveal ul > li::before { content: "—"; position: absolute; left: 0; color: var(--accent); }
+  .reveal ul ul { margin: 9px 0 4px; }
+  .reveal ul ul > li { font-size: .86em; margin-bottom: 7px; }
+  .reveal ul ul > li::before { content: "·"; font-weight: 700; left: 8px; color: var(--muted); }
+  .lead { font: 400 31px/1.35 var(--serif); color: var(--ink); margin-bottom: 26px !important; }
+  .lead em { color: var(--accent); }
+  .muted { color: var(--muted); }
+  .small { font-size: .78em; }
+
+  /* label / value rows */
+  .dl { display: grid; grid-template-columns: 170px 1fr; border-top: 1px solid var(--rule); }
+  .dl > div { padding: 17px 0; border-bottom: 1px solid var(--rule); }
+  .dl > div:nth-child(odd) { font: 600 14px/1.9 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+  .dl > div:nth-child(even) { font: 400 28px/1.3 var(--serif); color: var(--ink); }
+
+  /* numbered steps */
+  .steps { counter-reset: s; }
+  .steps > li { padding-left: 54px !important; }
+  .steps > li::before { counter-increment: s; content: counter(s, decimal-leading-zero) !important;
+    font: 500 22px/1.5 var(--serif) !important; color: var(--accent) !important; }
+
+  /* pull note */
+  .note { margin-top: 26px; padding: 4px 0 4px 22px; border-left: 3px solid var(--accent);
+    font: italic 400 25px/1.4 var(--serif); color: var(--ink); }
+
+  /* ---------- title & interstitial slides ---------- */
+  .reveal section.title { padding: 0 84px; display: flex !important; flex-direction: column; justify-content: center; }
+  .title .kicker { margin-bottom: 30px; }
+  .title h1 { font: 400 104px/0.98 var(--serif); letter-spacing: -.025em; color: var(--ink); margin: 0; text-transform: none; }
+  .title h1 em { font-style: italic; color: var(--accent); }
+  .title .byline { display: flex; gap: 50px; margin-top: 48px; padding-top: 22px; border-top: 1px solid var(--ink);
+    font: 400 22px/1.4 var(--sans); color: var(--ink-2); }
+  .title .byline b { display: block; font: 600 13px/1 var(--sans); letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .reveal section.inter { display: flex !important; flex-direction: column; justify-content: center; padding: 0 84px; }
+  .inter h1 { font: italic 400 92px/1.02 var(--serif); color: var(--ink); margin: 0; text-transform: none; letter-spacing: -.02em; }
+  .inter p { font: 400 26px/1.4 var(--sans); color: var(--ink-2); margin-top: 34px; }
+  .inter .rule { width: 90px; height: 3px; background: var(--accent); margin-bottom: 36px; }
+  .inter ol.qs { margin: 28px 0 0; padding-left: 1.2em; font: 400 24px/1.5 var(--sans); color: var(--ink-2); }
+  .inter ol.qs li::marker { color: var(--accent); }
+
+  /* ---------- roles ---------- */
+  .roles { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--ink); }
+  .roles > div { padding: 15px 16px 15px 0; border-bottom: 1px solid var(--rule); }
+  .roles > div:not(:nth-child(3n)) { border-right: 1px solid var(--rule); }
+  .roles > div:not(:nth-child(3n+1)) { padding-left: 18px; }
+  .roles .n { font: 500 15px/1 var(--serif); color: var(--accent); }
+  .roles h4 { font: 500 25px/1.15 var(--serif); margin: 6px 0 5px; color: var(--ink); text-transform: none; letter-spacing: 0; }
+  .roles p { font-size: 17px; line-height: 1.35; color: var(--muted); }
+
+  .role { display: grid; grid-template-columns: 88px 1fr; gap: 12px; padding: 18px 0; border-bottom: 1px solid var(--rule); }
+  .role:last-child { border-bottom: 0; }
+  .role .n { font: italic 400 46px/1 var(--serif); color: var(--accent); }
+  .role h3 { font: 500 31px/1.1 var(--serif); margin: 0 0 8px; color: var(--ink); text-transform: none; letter-spacing: 0; }
+  .role h3 span { font: 600 13px/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--accent); margin-left: 10px; vertical-align: middle; }
+  .role p { font-size: 22px; line-height: 1.42; color: var(--ink-2); }
+  .role p + p { margin-top: 7px; }
+  .role.solo { padding-top: 28px; }
+  .role.solo h3 { font-size: 40px; margin-bottom: 16px; }
+  .role.solo p { font-size: 27px; }
+  .role.solo p + p { margin-top: 14px; }
+
+  /* ---------- grading ---------- */
+  .grade { display: grid; grid-template-columns: 250px 1fr; gap: 46px; align-items: start; margin-top: 10px; }
+  .grade .big { font: 400 100px/0.9 var(--serif); color: var(--accent); letter-spacing: -.03em; }
+  .grade .big small { display: block; font: 600 14px/1.4 var(--sans); letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin-top: 14px; }
+
+  /* ---------- topics ---------- */
+  .topics { display: grid; grid-template-columns: 1fr 1fr; column-gap: 50px; }
+  .topics > div { display: grid; grid-template-columns: 42px 1fr; padding: 13px 0; border-bottom: 1px solid var(--rule); }
+  .topics .n { font: 500 18px/1.5 var(--serif); color: var(--accent); }
+  .topics b { font: 500 23px/1.25 var(--serif); }
+  .topics span { display: block; font-size: 17px; color: var(--muted); margin-top: 3px; }
+
+  /* ---------- schedule table ---------- */
+  .reveal table.sched { border-collapse: collapse; width: 100%; font-size: 14px; margin: 0; }
+  .reveal table.sched th, .reveal table.sched td { border: 0; border-bottom: 1px solid var(--rule); padding: 7px 6px; text-align: left; }
+  .reveal table.sched th { font: 600 11px/1.2 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--muted);
+    border-bottom: 1px solid var(--ink); vertical-align: bottom; }
+  .reveal table.sched td { height: 20px; border-left: 1px solid var(--paper-2); }
+  .reveal table.sched td:first-child { font: 500 15px/1 var(--serif); white-space: nowrap; border-left: 0; color: var(--ink); }
+  .reveal table.sched td.span { font: italic 400 15px/1 var(--serif); color: var(--muted); text-align: center; }
+
+  /* ---------- paper header ---------- */
+  .paper { background: var(--card); padding: 28px 38px; font-family: "Times New Roman", Times, serif; color: #111;
+    border: 1px solid var(--rule); box-shadow: 6px 6px 0 var(--paper-2); margin-top: 6px; }
+  .paper .venue { font-size: 17px; border-bottom: 2px solid #111; padding-bottom: 4px; margin-bottom: 30px; }
+  .paper .t { font-size: 29px; font-weight: 700; line-height: 1.2; margin-bottom: 24px; }
+  .paper .a { font-size: 19px; font-weight: 700; line-height: 1.45; }
+  .paper .aff { font-size: 17px; line-height: 1.4; margin-top: 6px; }
+  .paper sup { font-size: .65em; }
+  .annot { display: flex; gap: 34px; margin-top: 22px; font-size: 19px; color: var(--ink-2); }
+  .annot b { color: var(--accent); font-family: var(--serif); font-size: 22px; margin-right: 6px; }
+
+  /* ---------- diagram ---------- */
+  .flow { display: flex; align-items: stretch; justify-content: space-between; margin-top: 50px; }
+  .flow .node { flex: 1; border-top: 3px solid var(--ink); padding-top: 16px; }
+  .flow .node .lbl { font: 600 13px/1 var(--sans); letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+  .flow .node .val { font: 400 46px/1.15 var(--serif); margin-top: 10px; color: var(--ink); }
+  .flow .node.score { border-color: var(--accent); }
+  .flow .node.score .val { color: var(--accent); }
+  .flow .arr { width: 70px; display: flex; align-items: center; justify-content: center; font: 400 40px/1 var(--serif); color: var(--muted); }
+  .reveal .question { font: italic 400 40px/1.25 var(--serif); margin-top: 64px; color: var(--ink); }
+  .caveats { display: flex; gap: 30px; margin-top: 24px; font: 600 15px/1 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--accent); }
+  .caveats span::before { content: "× "; }
+
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
+  .colhead { font: 600 14px/1 var(--sans); letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin: 6px 0 14px; }
+
+  /* reveal chrome */
+  .reveal .controls { color: var(--accent); }
+  .reveal .progress { color: var(--accent); height: 3px; }
+  .reveal .progress { background: transparent; }
+</style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<!-- Title -->
+<section class="title">
+  <div class="kicker">Seminar 894027 · Bar-Ilan University</div>
+  <h1>Evaluating<br><em>LLMs</em></h1>
+  <div class="byline">
+    <div><b>Instructor</b>Yanai Elazar</div>
+    <div><b>Term</b>Fall 2026</div>
+    <div><b>Sessions</b>Tuesdays 16:00–17:30</div>
+  </div>
+</section>
+
+<section class="c" data-k="Introduction">
+  <h2>What is this seminar about?</h2>
+  <p class="lead"><em>Evaluating</em> capabilities of large language models.</p>
+  <ul>
+    <li>Evaluation datasets and benchmarks for LLMs</li>
+    <li>The design, construction, limitations, and evolution of benchmarks</li>
+    <li>From early static benchmarks to dynamic and human-preference evaluation</li>
+    <li>A critical look at benchmarks: contamination, saturation, gaming</li>
+    <li>Mostly text-based LLMs (other modalities are optional) </li>
+  </ul>
+</section>
+
+<section class="c" data-k="Motivation">
+  <h2>Why evaluation matters</h2>
+  <p class="lead">We (they) built impressive systems that somehow do magical things. <em>But what can they actually do?</em></p>
+  <ul>
+    <li>How do we know, and when can we trust the numbers?</li>
+    <li>We need the vocabulary to discuss these questions</li>
+    <li>Benchmarks shape what the field builds</li>
+    <li><b>The end goal:</b> know what to expect, build better models (and benchmarks), and encourage responsible development and deployment</li>
+  </ul>
+</section>
+
+<section class="c" data-k="Motivation">
+  <h2>The number we report</h2>
+  <div class="flow">
+    <div class="node"><div class="lbl">Model</div><div class="val">[LLM]</div></div>
+    <div class="arr">→</div>
+    <div class="node"><div class="lbl">Benchmark</div><div class="val">[Dataset]</div></div>
+    <div class="arr">→</div>
+    <div class="node score"><div class="lbl">Score</div><div class="val">[%]</div></div>
+  </div>
+  <p class="question fragment">But does the score measure what we think it does?</p>
+  <div class="caveats fragment"><span>Contamination</span><span>Saturation</span><span>Gaming</span><span>Label noise</span></div>
+</section>
+
+<section class="c" data-k="Logistics">
+  <h2>Course logistics</h2>
+  <div class="dl">
+    <div>When</div><div>Tuesdays, 16:00–17:30</div>
+    <div>Where</div><div>Building 503 (CS building), Room 226</div>
+    <div>Format</div><div>Role-playing reading group</div>
+    <div>Language</div><div>English: discussions, presentations, and written work</div>
+    <div>Email</div><div>elazary@cs.biu.ac.il</div>
+  </div>
+</section>
+
+<section class="c" data-k="Logistics">
+  <h2>Prerequisites</h2>
+  <ul>
+    <li>Intro to Machine Learning</li>
+    <li>At least one advanced class
+      <ul><li>Natural Language Processing</li><li>Multimodal Learning</li><li>Deep Learning</li></ul>
+    </li>
+  </ul>
+</section>
+
+<section class="c" data-k="Logistics">
+  <h2>Seminar schedule</h2>
+  <div class="dl">
+    <div>Duration</div><div>13 weeks · October 13, 2026 – January 12, 2027</div>
+    <div>Week 1</div><div>Introduction &amp; course overview (Yanai)</div>
+    <div>Weeks 2–13</div><div>One paper per session, discussed through roles</div>
+    <div>Rotation</div><div>Roles rotate weekly; everyone has to present each role at most once, <em>except</em> (one of) the reviewer's role, which is mandatory</div>
+  </div>
+</section>
+
+<section class="inter">
+  <div class="rule"></div>
+  <h1>Let’s get to know<br>each other.</h1>
+  <p>Participant introductions</p>
+  <ol class="qs">
+    <li>What degree are you pursuing, and what stage are you at?</li>
+    <li>What do you work on, and with whom?</li>
+    <li>What do you hope to learn in this seminar?</li>
+  </ol>
+</section>
+
+<section class="c" data-k="The Format">
+  <h2>The <em>role-playing</em> format</h2>
+  <p class="lead">Everyone reads the <em>same paper</em>, each through a different lens.</p>
+  <ul>
+    <li>Your role defines how you read and present the paper that week</li>
+    <li>Roles rotate throughout the semester</li>
+    <li>You don't have to repeat the same role twice</li>
+    <li>Format by Colin Raffel &amp; Alec Jacobson, adapted with some modifications
+      <ul><li><a href="https://colinraffel.com/blog/role-playing-seminar.html">Role-Playing Paper-Reading Seminars</a></li></ul>
+    </li>
+  </ul>
+</section>
+
+<section class="c" data-k="The Format">
+  <h2>Nine roles</h2>
+  <div class="roles">
+    <div><span class="n">I</span><h4>Reviewer #1</h4><p>Full review; main presenter</p></div>
+    <div><span class="n">II</span><h4>Reviewer #2</h4><p>Written review; discussion</p></div>
+    <div><span class="n">III</span><h4>Data Hacker</h4><p>Is the data any good?</p></div>
+    <div><span class="n">IV</span><h4>Archaeologist</h4><p>Contextualizes the paper</p></div>
+    <div><span class="n">V</span><h4>Academic Researcher</h4><p>A follow-up project</p></div>
+    <div><span class="n">VI</span><h4>Frontier Lab Employee</h4><p>Use the benchmark internally?</p></div>
+    <div><span class="n">VII</span><h4>AGI Pilled</h4><p>Evaluate SOTA models</p></div>
+    <div><span class="n">VIII</span><h4>Private Investigator</h4><p>Background check on an author</p></div>
+    <div><span class="n">IX</span><h4>Figure 1 Designer</h4><p>A new Figure 1; runs the show</p></div>
+  </div>
+</section>
+
+<section class="c" data-k="Roles · I–II">
+  <h2>The critics</h2>
+  <div class="role"><div class="n">I</div><div>
+    <h3>Peer Reviewer #1 <span>Presents</span></h3>
+    <p>The paper is under review at a top venue (NeurIPS, ACL, ICLR, CVPR). Complete a full review using the venue’s official form: accept or reject, and what changes you would require.</p>
+    <p>You give the initial presentation of the paper, up to 10 minutes.</p>
+  </div></div>
+  <div class="role"><div class="n">II</div><div>
+    <h3>Peer Reviewer #2</h3>
+    <p>Same background job, but you <b>write</b> a review (see e.g. the <a href="https://aclrollingreview.org/reviewform">ACL review form</a>). No presentation, but contribute to the discussion as someone who deeply understands the work.</p>
+  </div></div>
+</section>
+
+<section class="c" data-k="Roles · III">
+  <h2>The critics</h2>
+  <div class="role solo"><div class="n">III</div><div>
+    <h3>Data Hacker</h3>
+    <p>You're considering using the dataset to evaluate your new model, but is the data actually good? Is it high quality? Do you agree with the labels? Investigate it, label a (meaningful and representative) random subset yourself, and report agreement with the original labels.</p>
+  </div></div>
+</section>
+
+<section class="c" data-k="Roles · IV">
+  <h2>Now what?</h2>
+  <div class="role solo"><div class="n">IV</div><div>
+    <h3>Archaeologist</h3>
+    <p>Place the paper among previous and subsequent work: Choose <b>one older paper</b> it cites that substantially influenced it, and <b>one newer paper</b> that builds on it. Present these works, explaining their relevance to the original paper, and the chronological context in which they appear.</p>
+  </div></div>
+</section>
+
+<section class="c" data-k="Roles · V">
+  <h2>Now what?</h2>
+  <div class="role solo"><div class="n">V</div><div>
+    <h3>Academic Researcher</h3>
+    <p>Propose a follow-up benchmark that <b>builds on</b> this paper’s existence and contributions. What did the original benchmark not solve? It should be harder to match today's LLMs capabilities.</p>
+  </div></div>
+</section>
+
+<section class="c" data-k="Roles · VI">
+  <h2>Now what?</h2>
+  <div class="role solo"><div class="n">VI</div><div>
+    <h3>Frontier Lab Employee</h3>
+    <p>Pitch why your lab should invest in this evaluating this benchmark, with at least one positive and one negative real-world impact of using it. Is it easy? Would collecting data or creating synthetic one solve it?</p>
+  </div></div>
+</section>
+
+<section class="c" data-k="Roles · VII">
+  <h2>Now what?</h2>
+  <div class="role solo"><div class="n">VII</div><div>
+    <h3>AGI Pilled</h3>
+    <p>Is the data being solved by the latest SOTA model? Evaluate the benchmark with the 2–3 best models to date: at least one open-weights and one API-based. Use a sample if evaluating the full set gets too expensive.</p>
+  </div></div>
+</section>
+
+<section class="c" data-k="Roles · VIII">
+  <h2>Gossip</h2>
+  <div class="role solo"><div class="n">VIII</div><div>
+    <h3>Private Investigator</h3>
+    <p>Run a background check on one of the authors: where they worked, what they studied, what led them here, and what motivated this paper. You may contact the authors; be courteous and on-topic.</p>
+  </div></div>
+</section>
+
+<section class="c" data-k="Roles · IX">
+  <h2>Can you do it better?</h2>
+  <div class="role solo"><div class="n">IX</div><div>
+    <h3>Figure 1 Designer <span>Runs the laptop</span></h3>
+    <p>Create an alternative Figure 1: neat, self-explanatory, nicely designed, and on point. See this <a href="https://maxwellforbes.com/posts/figure-creation-tutorial-making-a-figure-1/" target="_blank">guide to making a Figure 1</a>.</p>
+    <p>Everyone sends you their slides, so the class presents from a single computer.</p>
+  </div></div>
+</section>
+
+<section class="c" data-k="The Format">
+  <h2>The Schedule</h2>
+  <ul class="steps">
+    <li><b>Ice-breaker.</b> Everyone vote on an alternative title for the paper.</li>
+    <li><b>Roles present</b> their contributions in turn.</li>
+    <li><b>Discussion between roles.</b> Reviewers may disagree; the Researcher’s proposal may connect to the Archaeologist’s finds; the Data Hacker may surprise us, etc.</li>
+  </ul>
+</section>
+
+<section class="c" data-k="Grading">
+  <h2>What is expected of you</h2>
+  <div class="grade">
+    <div class="big">100%<small>Weekly role<br>preparation</small></div>
+    <div>
+      <ul>
+        <li>Read the assigned paper before each class</li>
+        <li>Play your assigned role and prepare accordingly</li>
+        <li>Participate, ask questions, engage with each other</li>
+        <li>Graded on depth and quality, and on engagement from your role</li>
+      </ul>
+      <div class="note">Bonus: each class opens with a vote on the best alternative title. Author of the most voted title gets a point to the final grade.</div>
+    </div>
+  </div>
+</section>
+
+<section class="c" data-k="Policy">
+  <h2>Attendance</h2>
+  <ul>
+    <li>Presence in class is mandatory</li>
+    <li>One absence allowed without explanation</li>
+    <li>More than one requires an authorized explanation
+      <ul><li>Medical certificate for sickness</li><li>Official documentation for other reasons</li></ul>
+    </li>
+  </ul>
+  <div class="note">Every week, every student has a role. Missing class means missing your role, and that someone else has to cover up for you.</div>
+</section>
+
+<section class="c" data-k="Schedule" style="padding-left:60px; padding-right:60px">
+  <h2>Role assignments</h2>
+  <table class="sched">
+    <thead><tr><th>Week</th><th>Paper</th><th>Rev. #1</th><th>Rev. #2</th><th>Data Hacker</th><th>Archae&shy;ologist</th><th>Academic Researcher</th><th>Frontier Lab</th><th>AGI Pilled</th><th>Private Invest.</th><th>Figure 1 Designer</th></tr></thead>
+    <tbody>
+      <tr><td>1 · 13.10</td><td colspan="10" class="span">Introduction &amp; Course Overview</td></tr>
+      <tr><td>2 · 20.10</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>3 · 27.10</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>4 · 3.11</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>5 · 10.11</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>6 · 17.11</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>7 · 1.12</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>8 · 8.12</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>9 · 15.12</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>10 · 22.12</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>11 · 29.12</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>12 · 5.1</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>13 · 12.1</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="c" data-k="Reading List">
+  <h2>Topics <em>(i)</em></h2>
+  <div class="topics">
+    <div><span class="n">01</span><div><b>Foundations</b><span>What makes LLM evaluation hard? HELM, surveys</span></div></div>
+    <div><span class="n">05</span><div><b>Code &amp; software engineering</b><span>HumanEval, SWE-bench, Terminal-Bench</span></div></div>
+    <div><span class="n">02</span><div><b>Broad multitask knowledge</b><span>MMLU, BIG-Bench, MMLU-Pro</span></div></div>
+    <div><span class="n">06</span><div><b>Factuality &amp; hallucination</b><span>TruthfulQA, HaluEval, SimpleQA</span></div></div>
+    <div><span class="n">03</span><div><b>Expert-level &amp; hard</b><span>GPQA, Humanity’s Last Exam</span></div></div>
+    <div><span class="n">07</span><div><b>LLM-as-judge &amp; preference</b><span>Chatbot Arena, AlpacaEval, Arena-Hard</span></div></div>
+    <div><span class="n">04</span><div><b>Mathematical reasoning</b><span>GSM8K, MATH, MathArena</span></div></div>
+  </div>
+</section>
+
+<section class="c" data-k="Reading List">
+  <h2>Topics <em>(ii)</em></h2>
+  <div class="topics">
+    <div><span class="n">08</span><div><b>Instruction following</b><span>IFEval, ToolLLM, AGENTIF</span></div></div>
+    <div><span class="n">11</span><div><b>Safety &amp; alignment</b><span>SafetyBench, multi-turn jailbreaks</span></div></div>
+    <div><span class="n">09</span><div><b>Long-context evaluation</b><span>RULER, HELMET, ZeroSCROLLS</span></div></div>
+    <div><span class="n">12</span><div><b>Dynamic &amp; living benchmarks</b><span>LiveBench, WildBench, Dynabench</span></div></div>
+    <div><span class="n">10</span><div><b>Multimodal evaluation</b><span>MMMU, MathVista, MMBench</span></div></div>
+    <div><span class="n">13</span><div><b>Generative image &amp; video</b><span>T2I-CompBench, VBench-2.0</span></div></div>
+  </div>
+  <div class="note">We’ll pick one paper per topic, unless there’s interest in more papers in the same topic.</div>
+  <div class="note">Interested in a different paper or topic? Reach out with a suggestion.</div>
+</section>
+
+<section class="c" data-k="Reading Academic Papers">
+  <h2>Got Stuck?</h2>
+  <p class="lead">Research papers can be challenging to read. Here is how to get help.</p>
+  <div class="two">
+    <div>
+      <div class="colhead">AI models</div>
+      <ul><li>Clarify concepts and terminology</li><li>Ask about specific sections or equations</li><li>Create a summary or video explanation</li></ul>
+    </div>
+    <div>
+      <div class="colhead">Classmates</div>
+      <ul><li>Discuss confusing parts together (there are 9 of you each week!)</li><li>Different perspectives (roles!) clarify ideas</li></ul>
+    </div>
+  </div>
+</section>
+
+<section class="c" data-k="Reading Academic Papers">
+  <h2>Write to the authors</h2>
+  <p class="lead">Emailing authors is common and encouraged. They are usually happy to clarify.</p>
+  <div class="two">
+    <div>
+      <div class="colhead">When</div>
+      <ul><li>Well ahead of class</li><li>After you have read the paper carefully</li></ul>
+    </div>
+    <div>
+      <div class="colhead">How</div>
+      <ul><li>Be specific about what you don’t understand</li><li>Show you’ve read the paper</li><li>Be polite and concise</li></ul>
+    </div>
+  </div>
+  <div class="note">You can also consult with me: elazary@cs.biu.ac.il</div>
+</section>
+
+<section class="c" data-k="Finding Papers">
+  <h2>Finding papers online</h2>
+  <ul>
+    <li>Many tools exist, each with different strengths and weaknesses</li>
+    <li>Check citations and references in key papers</li>
+    <li>Look for recent surveys and review papers</li>
+    <li>Follow research groups working in your area</li>
+    <li>Most papers are on arXiv; also check proceedings (NeurIPS, ICML, ACL…) and social media (X, Bluesky)</li>
+  </ul>
+</section>
+
+<section class="c" data-k="Finding Papers">
+  <h2>Search engines &amp; AI tools</h2>
+  <div class="two">
+    <div>
+      <div class="colhead">Academic search</div>
+      <div class="dl" style="grid-template-columns:1fr">
+        <div style="font:400 26px/1.3 var(--serif);letter-spacing:0;text-transform:none;color:var(--ink)">Google Scholar<br><span class="muted small" style="font-family:var(--sans)">Broad coverage, citation counts</span></div>
+        <div style="font:400 26px/1.3 var(--serif);color:var(--ink)">Semantic Scholar<br><span class="muted small" style="font-family:var(--sans)">Recommendations, influential citations</span></div>
+      </div>
+    </div>
+    <div>
+      <div class="colhead">AI-assisted</div>
+      <ul>
+        <li>Paper Finder <span class="muted small">paperfinder.allen.ai</span></li>
+        <li class="fragment">Undermind <span class="muted small">undermind.ai</span></li>
+        <li class="fragment">Perplexity <span class="muted small">perplexity.ai</span></li>
+        <li class="fragment">NotebookLM <span class="muted small">notebooklm.google</span></li>
+        <li class="fragment">…</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="c" data-k="Finding Papers">
+  <h2>Search strategies</h2>
+  <ul class="steps">
+    <li><b>Use AI search tools</b> with keywords (e.g. “benchmark contamination”) or paper titles</li>
+    <li><b>Go backwards &amp; forwards.</b> Find 1–2 key papers, check their references, then the papers that cite them. <span class="muted">(The Archaeologist’s job.)</span></li>
+    <li><b>Filter by recency and relevance.</b> The last 2–3 years for current methods; older foundational papers for background.</li>
+  </ul>
+</section>
+
+<section class="c" data-k="Policy">
+  <h2>Using AI</h2>
+  <p class="lead">You may, and should, use AI tools, on two conditions.</p>
+  <ul class="steps">
+    <li><b>Declare it</b> before your presentation, for any kind of AI use</li>
+    <li><b>Make it your own.</b> Go over the output and understand everything you present. AI can hallucinate: verify facts, figures, and citations.</li>
+  </ul>
+  <div class="note">AI should help you do a better job, not replace you. You are responsible for the correctness of everything you present.</div>
+</section>
+
+<section class="c" data-k="Reading Papers">
+  <h2>Authorship in ML</h2>
+  <div class="paper">
+    <div class="venue">Published as a conference paper at COLM 2025</div>
+    <div class="t">Supposedly Equivalent Facts That Aren’t? Entity Frequency in Pre-training Induces Asymmetry in LLMs</div>
+    <div class="a">Yuan He<sup>1,2*†</sup>, Bailan He<sup>3,4*</sup>, Zifeng Ding<sup>5*</sup>, Alisia Lupidi<sup>2,6</sup>, Yuqicheng Zhu<sup>7,8</sup>, Shuo Chen<sup>3</sup>, Caiqi Zhang<sup>5</sup>, Jiaoyan Chen<sup>9</sup>, Yunpu Ma<sup>3</sup>, Volker Tresp<sup>3</sup>, Ian Horrocks<sup>2</sup></div>
+    <div class="aff"><sup>1</sup>Amazon, <sup>2</sup>University of Oxford, <sup>3</sup>LMU Munich, <sup>4</sup>Siemens AG, <sup>5</sup>University of Cambridge, <sup>6</sup>Meta, <sup>7</sup>University of Stuttgart, <sup>8</sup>Bosch Center for AI, <sup>9</sup>The University of Manchester</div>
+  </div>
+</section>
+
+<section class="c" data-k="Reading Papers">
+  <h2>Reading an author list</h2>
+  <div class="dl">
+    <div>First</div><div>Usually students or ICs; did most of the work</div>
+    <div>Last</div><div>Usually advisors; supervised the work</div>
+    <div>Middle</div><div>Helped with experiments, brainstorming, or a friend of the first/last author…</div>
+    <div>Asterisk *</div><div>Equal contribution, often among first authors</div>
+    <div>Email</div><div>Typically the first authors</div>
+  </div>
+  <p class="muted small" style="margin-top:20px">Standards differ across fields.</p>
+</section>
+
+<section class="c" data-k="Presenting">
+  <h2>Presentation &amp; delivery</h2>
+  <div class="dl" style="grid-template-columns:150px 1fr">
+    <div>Slides</div><div>Clean and simple; avoid clutter, use visuals</div>
+    <div>Voice</div><div>Speak clearly; make eye contact</div>
+    <div>Time</div><div>Practice to fit the limit (Reviewer #1: 10 minutes)</div>
+    <div>Questions</div><div>Anticipate them; simulate with AI or friends</div>
+    <div>Dialogue</div><div>Respond to, challenge, and build on the other roles</div>
+  </div>
+</section>
+
+<section class="inter">
+  <div class="rule"></div>
+  <h1>Questions?</h1>
+  <p>elazary@cs.biu.ac.il<br><span class="muted">Subject: “Fall 2026 Evaluating LLM Seminar”</span></p>
+</section>
+
+<section class="c" data-k="Before Next Week">
+  <h2>Remember to…</h2>
+  <ul class="steps">
+    <li>Register to your role for the semester</li>
+    <li>Read next week’s paper before class</li>
+    <li>Prepare your role’s contribution</li>
+    <li>Send your slides to the week’s Figure 1 Designer before class</li>
+    <li>Send over an alternative title for the ice-breaker</li>
+  </ul>
+  <div class="fragment" style="display:flex; gap:36px; align-items:center; margin-top:30px">
+    <div class="dl" style="grid-template-columns:230px 1fr; flex:1">
+      <div>Slides template</div><div><a href="https://docs.google.com/presentation/d/1_HUU4YqCr4fbgAhU5fCGW77AE0u9xwejbJC3DFq4TLc/edit?usp=sharing" target="_blank">Google Slides</a> <span class="muted small">(optional)</span></div>
+      <div>Course doc</div><div><a href="https://docs.google.com/document/d/1AquKn3f5Lmgk5l5BXcqS4i9iETAcElB_WF5uL5rexbw/edit?usp=sharing" target="_blank">Google Doc</a></div>
+    </div>
+    <a href="https://docs.google.com/document/d/1AquKn3f5Lmgk5l5BXcqS4i9iETAcElB_WF5uL5rexbw/edit?usp=sharing" target="_blank" style="border:0; line-height:0"><img src="seminar26-qr.png" alt="QR code linking to the course Google Doc" style="width:140px; height:140px; margin:0; display:block; border:1px solid var(--rule)"></a>
+  </div>
+</section>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+<script>
+  // Add kicker + running folio to every content slide
+  const all = [...document.querySelectorAll('.reveal .slides > section')];
+  all.forEach((s, i) => {
+    if (!s.classList.contains('c')) return;
+    const k = document.createElement('div');
+    k.className = 'kicker';
+    k.textContent = String(i + 1).padStart(2, '0') + ' — ' + (s.dataset.k || '');
+    s.prepend(k);
+    const f = document.createElement('div');
+    f.className = 'folio';
+    f.innerHTML = '<i>Evaluating LLMs</i><span>FALL 2026 · ' + (i + 1) + ' / ' + all.length + '</span>';
+    s.append(f);
+  });
+  // Reveal bullets one per click (top-level lists with 2+ items; sub-bullets come with their parent)
+  document.querySelectorAll('.reveal .slides ul, .reveal .slides ol').forEach(l => {
+    if (l.parentElement.closest('li')) return;
+    const items = [...l.children].filter(el => el.tagName === 'LI');
+    if (items.length < 2 || items.some(li => li.classList.contains('fragment'))) return;
+    items.forEach(li => li.classList.add('fragment'));
+  });
+  // Notes placed after the bullets appear on their own click, after the last bullet
+  all.forEach(s => {
+    const frags = [...s.querySelectorAll('.fragment')];
+    if (!frags.length) return;
+    const last = frags[frags.length - 1];
+    s.querySelectorAll('.note').forEach(n => {
+      if (last.compareDocumentPosition(n) & Node.DOCUMENT_POSITION_FOLLOWING) n.classList.add('fragment');
+    });
+  });
+  Reveal.initialize({
+    width: 1024, height: 768, margin: 0, center: false,
+    hash: true, controls: false, progress: true, slideNumber: false,
+    transition: 'fade', transitionSpeed: 'fast', backgroundTransition: 'none',
+    plugins: [ RevealNotes ]
+  });
+</script>
+</body>
+</html>
