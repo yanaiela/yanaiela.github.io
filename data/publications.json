@@ -1,5 +1,16 @@
 [
   {
+    "title": "Understanding AI from the Inside: The State of Mechanistic Interpretability for AI Safety",
+    "authors": "Fazl Barez, Tung-Yu Wu, Hunar Batra, Gabriele Dominici, Florent Draye, Yanai Elazar, Damiano Fornasiere, Antía García, Abir Harrasse, Riley Harris, Sara Hooker, Michael Lan, Belinda Z. Li, Aaron Maiwald, Narmeen Fatimah Oozeer, Naomi Saphra, Or David Shafran, Adi Simhi, Robert Trager, Shriyash Kaustubh Upadhyay, Ziyu Yao, Yu Zhao, Shay B. Cohen, Mor Geva, Yoshua Bengio, Stella Biderman, Hassan Sajjad",
+    "venue": "arxiv",
+    "year": 2026,
+    "bibtex": "/bibtex/mech-interp-safety.bib",
+    "links": {
+      "paper": "https://arxiv.org/abs/2611.08438",
+      "webpage": "https://tsglab.github.io/mechinterp-safety/"
+    }
+  },
+  {
     "title": "MANCE: Manifold Aware Concept Erasure",
     "authors": "Matan Avitan, Yoav Goldberg, Yanai Elazar",
     "venue": "arxiv",
