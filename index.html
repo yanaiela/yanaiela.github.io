@@ -53,7 +53,7 @@
   <!-- Load lazysizes for image loading optimization -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.2.2/lazysizes.min.js" integrity="sha512-TmDwFLhg3UA4ZG0Eb4MIyT1O1Mb+Oww5kFG0uHqXsdbyZz9DcvYQhKpGgNkamAI6h2lGGZq2X8ftOJvF/XjTUg==" crossorigin="anonymous" async></script>
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous">
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -64,6 +64,37 @@
   <link href="css/timeline.css" rel="stylesheet">
 
   <style>
+    ul.network-icon {
+        max-width: none;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    ul.network-icon li {
+        flex-grow: 0;
+    }
+    .news-wrap {
+        position: relative;
+        margin-bottom: 1.5rem;
+    }
+    #news-list {
+        overflow-y: auto;
+        margin-bottom: 0;
+    }
+    .news-fade {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 56px;
+        pointer-events: none;
+        border-radius: 0 0 .25rem .25rem;
+        background: linear-gradient(to bottom, rgba(255,255,255,0), #fff 85%);
+        transition: opacity 0.2s ease;
+    }
+    .news-wrap.at-end .news-fade {
+        opacity: 0;
+        pointer-events: none;
+    }
     .pub-card {
         background: #fff;
         border-radius: 6px;
@@ -200,20 +231,8 @@
                  </li>
 
                  <li>
-                   <a href="https://bsky.app/profile/yanai.bsky.social" target="_blank" rel="noopener" aria-label="Bluesky">
-                     <i class="fab fa-bluesky fa-xs zoom"></i>
-                   </a>
-                 </li>
-
-                 <li>
                    <a href="https://scholar.google.co.il/citations?user=7p_Ce8kAAAAJ" target="_blank" rel="noopener" aria-label="Google Scholar">
                      <i class="ai ai-google-scholar big-icon zoom"></i>
-                   </a>
-                 </li>
-
-                 <li>
-                   <a href="https://www.semanticscholar.org/author/Yanai-Elazar/51131518" target="_blank" rel="noopener" aria-label="Semantic Scholar">
-                     <i class="ai ai-semantic-scholar fa- zoom"></i>
                    </a>
                  </li>
 
@@ -275,9 +294,10 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <!-- <p>Basic Timeline</p> -->
-                        <div class="timeline p-4 block mb-4">
+                        <div class="news-wrap">
+                        <div class="timeline p-4 block" id="news-list">
 
-                          <div class="tl-item active">
+                          <div class="tl-item">
                             <div class="tl-dot b-warning"></div>
                             <div class="tl-content">
                                 <div class="">Attending EMNLP 2026</div>
@@ -285,10 +305,10 @@
                             </div>
                           </div>
 
-                          <div class="tl-item active">
+                          <div class="tl-item">
                             <div class="tl-dot b-warning"></div>
                             <div class="tl-content">
-                                <div class="">Invited talk at the Copenhagen NLP Symposium</div>
+                                <div class="">Keynote talk at the Copenhagen NLP Symposium</div>
                                 <div class="tl-date text-muted mt-1">October 2026</div>
                             </div>
                           </div>
@@ -421,6 +441,8 @@
                                 <div class="tl-date text-muted mt-1">July 2024</div>
                             </div>
                           </div>
+                        </div>
+                        <div class="news-fade" aria-hidden="true"></div>
                         </div>
                     </div>
                 </div>
@@ -566,6 +588,35 @@
       "https://www.semanticscholar.org/author/Yanai-Elazar/51131518"
     ]
   }
+  </script>
+
+  <!-- News list: show the first 6 items, scroll for the rest -->
+  <script>
+    (function () {
+      var VISIBLE = 6;
+      var PEEK = 36; // px of the next item left showing under the fade, as a scroll cue
+      var list = document.getElementById('news-list');
+      if (!list) return;
+      var wrap = list.parentNode;
+      function updateEnd() {
+        var atEnd = list.scrollTop + list.clientHeight >= list.scrollHeight - 4;
+        wrap.classList.toggle('at-end', atEnd);
+      }
+      function fitNews() {
+        var items = list.querySelectorAll('.tl-item');
+        if (items.length <= VISIBLE) {
+          list.style.maxHeight = '';
+          wrap.classList.add('at-end');
+          return;
+        }
+        list.style.maxHeight = (items[VISIBLE].offsetTop + PEEK) + 'px';
+        updateEnd();
+      }
+      list.addEventListener('scroll', updateEnd, { passive: true });
+      window.addEventListener('load', fitNews);
+      window.addEventListener('resize', fitNews);
+      fitNews();
+    })();
   </script>
 
   <!-- JavaScript Resources -->
