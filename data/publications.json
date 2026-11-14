@@ -1,5 +1,16 @@
 [
   {
+    "title": "Pretraining Data Statistics Shape the Phases of Learning Entity Comparison in Language Models",
+    "authors": "Yik Siu Chan, *Jing Huang, *Yanai Elazar, *Atticus Geiger",
+    "venue": "NeurIPS 2026",
+    "year": 2026,
+    "bibtex": "/bibtex/entity-comparison-phases.bib",
+    "links": {
+      "paper": "https://arxiv.org/abs/2611.16882",
+      "code": "https://github.com/yiksiu-chan/entity-comparison"
+    }
+  },
+  {
     "title": "Understanding AI from the Inside: The State of Mechanistic Interpretability for AI Safety",
     "authors": "Fazl Barez, Tung-Yu Wu, Hunar Batra, Gabriele Dominici, Florent Draye, Yanai Elazar, Damiano Fornasiere, Antía García, Abir Harrasse, Riley Harris, Sara Hooker, Michael Lan, Belinda Z. Li, Aaron Maiwald, Narmeen Fatimah Oozeer, Naomi Saphra, Or David Shafran, Adi Simhi, Robert Trager, Shriyash Kaustubh Upadhyay, Ziyu Yao, Yu Zhao, Shay B. Cohen, Mor Geva, Yoshua Bengio, Stella Biderman, Hassan Sajjad",
     "venue": "arxiv",
